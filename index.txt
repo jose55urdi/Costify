@@ -1,0 +1,3087 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-GQ1BRYK17S"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+    gtag('config', 'G-GQ1BRYK17S');
+  </script>
+
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Costify — Calculadora de Precios para Emprendedores Bolivia</title>
+
+  <!-- SEO Básico -->
+  <meta name="description"
+    content="Calcula el precio de venta de tu producto con IVA boliviano (13%) incluido. Gratis para emprendedores. Ingresa tus costos y obtén el precio justo al instante." />
+  <meta name="keywords"
+    content="calculadora de precios Bolivia, cómo calcular precio de venta, precio con IVA Bolivia, calculadora costos emprendedor, precio justo producto, emprendimiento Bolivia" />
+  <meta name="author" content="Costify" />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://jose55urdi.github.io/Precio-Smart/" />
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://jose55urdi.github.io/Precio-Smart/" />
+  <meta property="og:title" content="Costify — Calculadora de Precios para Emprendedores Bolivia" />
+  <meta property="og:description"
+    content="¿Cuánto cobrar por tu producto? Calcula el precio de venta ideal con IVA boliviano incluido. Gratis para emprendedores." />
+  <meta property="og:locale" content="es_BO" />
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Costify — Calculadora de Precios para Emprendedores Bolivia" />
+  <meta name="twitter:description"
+    content="¿Cuánto cobrar por tu producto? Calcula el precio de venta ideal con IVA boliviano incluido. Gratis." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=DM+Serif+Display&display=swap"
+    rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.44.0/tabler-icons.min.css" />
+  <!-- Librería SheetJS para exportación Excel (.xlsx) con fórmulas -->
+  <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+  <style>
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --bg: #ffffff;
+      --bg2: #f7f1e8;
+      --bg3: #fbf6ef;
+      --text: #111111;
+      --text2: #555555;
+      --text3: #888888;
+      --border: rgba(0, 0, 0, 0.10);
+      --border2: rgba(0, 0, 0, 0.18);
+      --brand: #FF6A1F;
+      --brand-dark: #E5540A;
+      --brand-light: #FFE7D6;
+      --brand-text: #8A2E00;
+      --result: #185fa5;
+      --result-light: #e6f1fb;
+      --result-text: #0c447c;
+      --radius: 8px;
+      --radius-lg: 12px;
+    }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--bg3);
+      color: var(--text);
+      min-height: 100vh;
+    }
+
+    nav {
+      background: var(--bg);
+      border-bottom: 0.5px solid var(--border);
+      padding: 0 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 56px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .logo {
+      font-family: 'DM Serif Display', serif;
+      font-size: 20px;
+      color: var(--text);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      text-decoration: none;
+    }
+
+    .logo-dot {
+      width: 8px;
+      height: 8px;
+      background: var(--brand);
+      border-radius: 50%;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 0;
+    }
+
+    .nav-btn {
+      background: none;
+      border: none;
+      padding: 8px 16px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 14px;
+      color: var(--text2);
+      cursor: pointer;
+      border-radius: var(--radius);
+      transition: background 0.15s, color 0.15s;
+    }
+
+    .nav-btn:hover,
+    .nav-btn.active {
+      background: var(--bg2);
+      color: var(--text);
+    }
+
+    .nav-btn.active {
+      font-weight: 500;
+    }
+
+    .hero {
+      background: var(--bg);
+      border-bottom: 0.5px solid var(--border);
+      padding: 2.5rem 2rem 2rem;
+      text-align: center;
+    }
+
+    .hero h1 {
+      font-family: 'DM Serif Display', serif;
+      font-size: 32px;
+      font-weight: 400;
+      margin-bottom: 8px;
+    }
+
+    .hero p {
+      font-size: 15px;
+      color: var(--text2);
+      max-width: 480px;
+      margin: 0 auto;
+      line-height: 1.6;
+    }
+
+    .tabs {
+      display: flex;
+      gap: 4px;
+      background: var(--bg2);
+      border-radius: var(--radius-lg);
+      padding: 4px;
+      width: fit-content;
+      margin: 1.5rem auto 0;
+      border: 0.5px solid var(--border);
+    }
+
+    .tab {
+      background: none;
+      border: none;
+      padding: 8px 20px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text2);
+      cursor: pointer;
+      border-radius: 8px;
+      transition: all 0.15s;
+    }
+
+    .tab.active {
+      background: var(--bg);
+      color: var(--text);
+      border: 0.5px solid var(--border);
+    }
+
+    .content {
+      max-width: 720px;
+      margin: 2rem auto;
+      padding: 0 1rem;
+    }
+
+    .page {
+      display: none;
+    }
+
+    .page.visible {
+      display: block;
+    }
+
+    .card {
+      background: var(--bg);
+      border: 0.5px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 1.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .card-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 1.25rem;
+    }
+
+    .card-icon {
+      width: 32px;
+      height: 32px;
+      border-radius: var(--radius);
+      background: var(--brand-light);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--brand);
+      font-size: 16px;
+      flex-shrink: 0;
+    }
+
+    .card-title {
+      font-size: 14px;
+      font-weight: 500;
+    }
+
+    .card-sub {
+      font-size: 12px;
+      color: var(--text2);
+    }
+
+    .badge-free {
+      margin-left: auto;
+      font-size: 11px;
+      font-weight: 500;
+      padding: 3px 10px;
+      border-radius: 20px;
+      background: var(--brand-light);
+      color: var(--brand-text);
+      white-space: nowrap;
+    }
+
+    .badge-pro {
+      margin-left: auto;
+      font-size: 11px;
+      font-weight: 500;
+      padding: 3px 10px;
+      border-radius: 20px;
+      background: #fef3c7;
+      color: #92400e;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      white-space: nowrap;
+    }
+
+    .row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+
+    @media (max-width: 520px) {
+      .row {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .field label {
+      display: block;
+      font-size: 12px;
+      color: var(--text2);
+      margin-bottom: 5px;
+      font-weight: 500;
+    }
+
+    .prefix-wrap {
+      position: relative;
+    }
+
+    .prefix {
+      position: absolute;
+      left: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 13px;
+      color: var(--text3);
+      pointer-events: none;
+    }
+
+    input[type="text"],
+    input[type="number"],
+    input[type="email"] {
+      width: 100%;
+      height: 38px;
+      padding: 0 12px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 14px;
+      border: 0.5px solid var(--border2);
+      border-radius: var(--radius);
+      background: var(--bg);
+      color: var(--text);
+      transition: border-color 0.15s, box-shadow 0.15s;
+      appearance: none;
+    }
+
+    input:focus {
+      outline: none;
+      border-color: var(--brand);
+      box-shadow: 0 0 0 3px rgba(26, 110, 245, 0.1);
+    }
+
+    .prefix-wrap input {
+      padding-left: 36px;
+    }
+
+    .pro-field {
+      position: relative;
+    }
+
+    .pro-field input {
+      opacity: 0.5;
+      pointer-events: none;
+      background: var(--bg2);
+    }
+
+    .lock-icon {
+      position: absolute;
+      right: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 14px;
+      color: var(--text3);
+    }
+
+    .iva-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 14px;
+      background: var(--bg2);
+      border-radius: var(--radius);
+      margin-top: 12px;
+      border: 0.5px solid var(--border);
+    }
+
+    .iva-label {
+      font-size: 13px;
+      color: var(--text2);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .iva-val {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--brand);
+    }
+
+    .iva-toggle {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 14px;
+      background: var(--bg2);
+      border-radius: var(--radius);
+      margin-top: 12px;
+      border: 0.5px solid var(--border);
+    }
+
+    .iva-toggle label {
+      font-size: 13px;
+      color: var(--text2);
+      cursor: pointer;
+      margin: 0;
+    }
+
+    .iva-toggle input[type="checkbox"] {
+      width: 16px;
+      height: 16px;
+      cursor: pointer;
+      accent-color: var(--brand);
+    }
+
+    .divider {
+      height: 0.5px;
+      background: var(--border);
+      margin: 1.25rem 0;
+    }
+
+    .btn-primary {
+      width: 100%;
+      height: 44px;
+      background: var(--brand);
+      color: white;
+      border: none;
+      border-radius: var(--radius);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background 0.15s, transform 0.1s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .btn-primary:hover {
+      background: var(--brand-dark);
+    }
+
+    .btn-primary:active {
+      transform: scale(0.99);
+    }
+
+    .results {
+      display: none;
+      margin-top: 1rem;
+    }
+
+    .results.visible {
+      display: block;
+    }
+
+    .result-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+      margin-bottom: 1rem;
+    }
+
+    @media (max-width: 480px) {
+      .result-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    .metric {
+      background: var(--bg2);
+      border-radius: var(--radius);
+      padding: 14px;
+      text-align: center;
+      border: 0.5px solid var(--border);
+    }
+
+    .metric-label {
+      font-size: 11px;
+      color: var(--text2);
+      font-weight: 500;
+      margin-bottom: 6px;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    .metric-val {
+      font-size: 20px;
+      font-weight: 500;
+    }
+
+    .metric-val.highlight {
+      color: var(--result);
+    }
+
+    .breakdown {
+      background: var(--bg2);
+      border-radius: var(--radius);
+      padding: 1rem 1.25rem;
+      border: 0.5px solid var(--border);
+    }
+
+    .breakdown-title {
+      font-size: 11px;
+      font-weight: 500;
+      color: var(--text2);
+      margin-bottom: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    .br-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 7px 0;
+      font-size: 13px;
+      border-bottom: 0.5px solid var(--border);
+    }
+
+    .br-row:last-child {
+      border-bottom: none;
+    }
+
+    .br-row.total {
+      font-weight: 500;
+      font-size: 14px;
+      padding-top: 10px;
+      margin-top: 4px;
+    }
+
+    .br-row.total .br-val {
+      color: var(--brand);
+    }
+
+    .br-label {
+      color: var(--text2);
+    }
+
+    .br-val {
+      color: var(--text);
+      font-weight: 500;
+    }
+
+    .pro-banner {
+      background: var(--brand-light);
+      border: 0.5px solid #b8d0fc;
+      border-radius: var(--radius-lg);
+      padding: 1.5rem;
+      margin-bottom: 1rem;
+      text-align: center;
+    }
+
+    .pro-banner h3 {
+      font-size: 16px;
+      font-weight: 500;
+      color: var(--brand-text);
+      margin-bottom: 6px;
+    }
+
+    .pro-banner p {
+      font-size: 13px;
+      color: var(--brand);
+      margin-bottom: 14px;
+      line-height: 1.5;
+    }
+
+    .pro-features {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 16px;
+    }
+
+    .feat-pill {
+      font-size: 12px;
+      padding: 4px 12px;
+      background: white;
+      border: 0.5px solid #b8d0fc;
+      border-radius: 20px;
+      color: var(--brand-text);
+      font-weight: 500;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .btn-upgrade {
+      background: var(--brand);
+      color: white;
+      border: none;
+      border-radius: var(--radius);
+      padding: 10px 28px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background 0.15s;
+      text-decoration: none;
+      display: inline-block;
+    }
+
+    .btn-upgrade:hover {
+      background: var(--brand-dark);
+    }
+
+    .lm-card {
+      background: var(--bg);
+      border: 0.5px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 2.5rem 2rem;
+      text-align: center;
+      margin-bottom: 1rem;
+    }
+
+    .lm-icon {
+      width: 52px;
+      height: 52px;
+      background: var(--brand-light);
+      border-radius: 50%;
+      margin: 0 auto 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      color: var(--brand);
+    }
+
+    .lm-card h2 {
+      font-family: 'DM Serif Display', serif;
+      font-size: 24px;
+      font-weight: 400;
+      margin-bottom: 8px;
+    }
+
+    .lm-sub {
+      font-size: 14px;
+      color: var(--text2);
+      max-width: 400px;
+      margin: 0 auto 1.5rem;
+      line-height: 1.6;
+    }
+
+    .lm-benefits {
+      display: flex;
+      justify-content: center;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+      margin-bottom: 2rem;
+    }
+
+    .lm-benefit {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 13px;
+      color: var(--text2);
+    }
+
+    .lm-benefit i {
+      color: var(--brand);
+      font-size: 15px;
+    }
+
+    .lm-note {
+      font-size: 11px;
+      color: var(--text3);
+      margin-top: 12px;
+    }
+
+    .testimonials {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-top: 1rem;
+    }
+
+    @media (max-width: 480px) {
+      .testimonials {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .testi {
+      background: var(--bg2);
+      border-radius: var(--radius);
+      padding: 1rem;
+      text-align: left;
+      border: 0.5px solid var(--border);
+    }
+
+    .testi-text {
+      font-size: 13px;
+      color: var(--text2);
+      line-height: 1.5;
+      margin-bottom: 8px;
+      font-style: italic;
+    }
+
+    .testi-author {
+      font-size: 12px;
+      font-weight: 500;
+    }
+
+    /* SIDEBAR */
+    .sidebar-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.3);
+      z-index: 200;
+    }
+
+    .sidebar-overlay.open {
+      display: block;
+    }
+
+    .sidebar {
+      position: fixed;
+      left: -280px;
+      top: 0;
+      width: 280px;
+      height: 100vh;
+      background: var(--bg);
+      border-right: 0.5px solid var(--border);
+      z-index: 300;
+      transition: left 0.25s ease;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .sidebar.open {
+      left: 0;
+    }
+
+    .sidebar-header {
+      padding: 1.25rem 1.5rem;
+      border-bottom: 0.5px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .sidebar-logo {
+      font-family: 'DM Serif Display', serif;
+      font-size: 18px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .sidebar-close {
+      background: none;
+      border: none;
+      font-size: 20px;
+      cursor: pointer;
+      color: var(--text2);
+      padding: 4px;
+      border-radius: var(--radius);
+    }
+
+    .sidebar-close:hover {
+      background: var(--bg2);
+    }
+
+    .sidebar-menu {
+      padding: 1rem 0;
+      flex: 1;
+    }
+
+    .sidebar-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 1.5rem;
+      font-size: 14px;
+      color: var(--text2);
+      cursor: pointer;
+      transition: background 0.15s;
+      border: none;
+      background: none;
+      width: 100%;
+      text-align: left;
+      font-family: 'DM Sans', sans-serif;
+    }
+
+    .sidebar-item:hover {
+      background: var(--bg2);
+      color: var(--text);
+    }
+
+    .sidebar-item.active {
+      background: var(--brand-light);
+      color: var(--brand);
+      font-weight: 500;
+    }
+
+    .sidebar-item i {
+      font-size: 18px;
+    }
+
+    .sidebar-section {
+      font-size: 11px;
+      font-weight: 500;
+      color: var(--text3);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      padding: 8px 1.5rem 4px;
+    }
+
+    .menu-btn {
+      background: none;
+      border: none;
+      width: 36px;
+      height: 36px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      border-radius: var(--radius);
+      color: var(--text2);
+      font-size: 20px;
+      transition: background 0.15s;
+    }
+
+    .menu-btn:hover {
+      background: var(--bg2);
+    }
+
+
+    /* SOPORTE CHAT */
+    #nav-soporte {
+      display: none;
+    }
+
+    .soporte-wrap {
+      max-width: 720px;
+      margin: 2rem auto;
+      padding: 0 1rem;
+    }
+
+    .chat-card {
+      background: var(--bg);
+      border: 0.5px solid var(--border);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+    }
+
+    .chat-header {
+      padding: 1.25rem 1.5rem;
+      border-bottom: 0.5px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .chat-avatar {
+      width: 36px;
+      height: 36px;
+      background: var(--brand-light);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--brand);
+      font-size: 18px;
+    }
+
+    .chat-header-info h3 {
+      font-size: 14px;
+      font-weight: 500;
+    }
+
+    .chat-header-info p {
+      font-size: 12px;
+      color: var(--text2);
+    }
+
+    .chat-status {
+      width: 8px;
+      height: 8px;
+      background: #22c55e;
+      border-radius: 50%;
+      margin-left: auto;
+    }
+
+    .chat-messages {
+      height: 400px;
+      overflow-y: auto;
+      padding: 1.25rem;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .msg {
+      max-width: 80%;
+    }
+
+    .msg.bot {
+      align-self: flex-start;
+    }
+
+    .msg.user {
+      align-self: flex-end;
+    }
+
+    .msg-bubble {
+      padding: 10px 14px;
+      border-radius: 12px;
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    .msg.bot .msg-bubble {
+      background: var(--bg2);
+      color: var(--text);
+      border-radius: 4px 12px 12px 12px;
+    }
+
+    .msg.user .msg-bubble {
+      background: var(--brand);
+      color: white;
+      border-radius: 12px 4px 12px 12px;
+    }
+
+    .msg-time {
+      font-size: 11px;
+      color: var(--text3);
+      margin-top: 4px;
+      padding: 0 4px;
+    }
+
+    .msg.user .msg-time {
+      text-align: right;
+    }
+
+    .typing {
+      display: none;
+      align-self: flex-start;
+    }
+
+    .typing.visible {
+      display: flex;
+    }
+
+    .typing-bubble {
+      background: var(--bg2);
+      padding: 12px 16px;
+      border-radius: 4px 12px 12px 12px;
+      display: flex;
+      gap: 4px;
+      align-items: center;
+    }
+
+    .typing-dot {
+      width: 6px;
+      height: 6px;
+      background: var(--text3);
+      border-radius: 50%;
+      animation: bounce 1.2s infinite;
+    }
+
+    .typing-dot:nth-child(2) {
+      animation-delay: 0.2s;
+    }
+
+    .typing-dot:nth-child(3) {
+      animation-delay: 0.4s;
+    }
+
+    @keyframes bounce {
+
+      0%,
+      60%,
+      100% {
+        transform: translateY(0)
+      }
+
+      30% {
+        transform: translateY(-6px)
+      }
+    }
+
+    .chat-input-wrap {
+      padding: 1rem 1.25rem;
+      border-top: 0.5px solid var(--border);
+      display: flex;
+      gap: 8px;
+    }
+
+    .chat-input {
+      flex: 1;
+      height: 40px;
+      padding: 0 14px;
+      border: 0.5px solid var(--border2);
+      border-radius: var(--radius);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 14px;
+      background: var(--bg);
+      color: var(--text);
+    }
+
+    .chat-input:focus {
+      outline: none;
+      border-color: var(--brand);
+      box-shadow: 0 0 0 3px rgba(26, 110, 245, 0.1);
+    }
+
+    .chat-send {
+      width: 40px;
+      height: 40px;
+      background: var(--brand);
+      color: white;
+      border: none;
+      border-radius: var(--radius);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      transition: background 0.15s;
+      flex-shrink: 0;
+    }
+
+    .chat-send:hover {
+      background: var(--brand-dark);
+    }
+
+    .chat-suggestions {
+      padding: 0 1.25rem 1rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .suggestion {
+      font-size: 12px;
+      padding: 5px 12px;
+      background: var(--brand-light);
+      color: var(--brand-text);
+      border: 0.5px solid #b8d0fc;
+      border-radius: 20px;
+      cursor: pointer;
+      font-family: 'DM Sans', sans-serif;
+      transition: background 0.15s;
+    }
+
+    .suggestion:hover {
+      background: #d0e3fd;
+    }
+
+    /* FORO PAGE */
+    #nav-foro {
+      display: none;
+    }
+
+    .foro-wrap {
+      max-width: 720px;
+      margin: 2rem auto;
+      padding: 0 1rem;
+    }
+
+    .foro-header {
+      background: var(--bg);
+      border: 0.5px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 1.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .foro-header h2 {
+      font-family: 'DM Serif Display', serif;
+      font-size: 22px;
+      font-weight: 400;
+      margin-bottom: 4px;
+    }
+
+    .foro-header p {
+      font-size: 13px;
+      color: var(--text2);
+    }
+
+    footer {
+      text-align: center;
+      padding: 2rem 1rem;
+      font-size: 12px;
+      color: var(--text3);
+    }
+
+    /* INICIO NUEVO: ESTILOS PERFIL E HISTORIAL */
+    .custom-select,
+    .custom-textarea {
+      width: 100%;
+      padding: 8px 12px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 14px;
+      border: 0.5px solid var(--border2);
+      border-radius: var(--radius);
+      background: var(--bg);
+      color: var(--text);
+      transition: border-color 0.15s, box-shadow 0.15s;
+      outline: none;
+    }
+
+    .custom-select:focus,
+    .custom-textarea:focus {
+      border-color: var(--brand);
+      box-shadow: 0 0 0 3px rgba(26, 110, 245, 0.1);
+    }
+
+    .custom-textarea {
+      resize: vertical;
+    }
+
+    .feedback-msg {
+      padding: 10px 14px;
+      border-radius: var(--radius);
+      margin-bottom: 1rem;
+      font-size: 13px;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .feedback-msg.success {
+      background: rgba(34, 197, 94, 0.1);
+      color: #15803d;
+      border: 0.5px solid rgba(34, 197, 94, 0.2);
+    }
+
+    .feedback-msg.error {
+      background: rgba(220, 38, 38, 0.1);
+      color: #b91c1c;
+      border: 0.5px solid rgba(220, 38, 38, 0.2);
+    }
+
+    .text-danger {
+      color: #dc2626 !important;
+    }
+
+    .text-danger:hover {
+      background: rgba(220, 38, 38, 0.05) !important;
+      border-color: #dc2626 !important;
+    }
+
+    .btn-secondary {
+      background: var(--bg2);
+      color: var(--text2);
+      border: 0.5px solid var(--border2);
+      border-radius: var(--radius);
+      height: 38px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 13px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.15s;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      padding: 0 16px;
+    }
+
+    .btn-secondary:hover {
+      background: var(--bg3);
+      color: var(--text);
+      border-color: var(--brand);
+    }
+
+    .historial-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 0.5rem;
+      font-size: 13px;
+      text-align: left;
+    }
+
+    .historial-table th {
+      background: var(--bg2);
+      color: var(--text2);
+      font-weight: 600;
+      padding: 10px 12px;
+      border-bottom: 1px solid var(--border);
+      text-transform: uppercase;
+      font-size: 11px;
+      letter-spacing: 0.04em;
+    }
+
+    .historial-table td {
+      padding: 10px 12px;
+      border-bottom: 0.5px solid var(--border);
+      color: var(--text);
+      white-space: nowrap;
+    }
+
+    .historial-table tr:hover {
+      background: var(--bg2);
+    }
+
+    .historial-table tr:last-child td {
+      border-bottom: none;
+    }
+
+    .chart-container {
+      position: relative;
+      width: 100%;
+      height: 250px;
+      margin-top: 1rem;
+    }
+
+    /* FIN NUEVO: ESTILOS PERFIL E HISTORIAL */
+
+    /* INICIO NUEVO: ESTILOS DE BIENVENIDA */
+    :root {
+      --neon-green: #F0997B;
+      --bright-green: #5FD46D;
+      --turquoise: #378ADD;
+      --bright-blue: #185FA5;
+      --brand: #D85A30;
+      --dark-bg: #1E1E22;
+      --dark-bg-card: #2A2A30;
+      --dark-border: rgba(255, 255, 255, 0.08);
+      --text-white: #FFFFFF;
+      --text-gray: #A0A0A5;
+    }
+
+    #nav-bienvenida {
+      background: var(--dark-bg);
+      color: var(--text-white);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 2rem 1.5rem;
+      font-family: 'DM Sans', sans-serif;
+      position: relative;
+      overflow: hidden;
+    }
+
+    #nav-bienvenida::before {
+      content: '';
+      position: absolute;
+      top: -150px;
+      right: -150px;
+      width: 400px;
+      height: 400px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(55, 138, 221, 0.15) 0%, transparent 70%);
+      filter: blur(50px);
+      pointer-events: none;
+    }
+
+    #nav-bienvenida::after {
+      content: '';
+      position: absolute;
+      bottom: -150px;
+      left: -150px;
+      width: 400px;
+      height: 400px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(216, 90, 48, 0.12) 0%, transparent 70%);
+      filter: blur(50px);
+      pointer-events: none;
+    }
+
+    .welcome-card {
+      max-width: 600px;
+      width: 100%;
+      background: rgba(42, 42, 48, 0.6);
+      backdrop-filter: blur(20px);
+      border: 1px solid var(--dark-border);
+      border-radius: var(--radius-lg);
+      padding: 3rem 2.5rem;
+      text-align: center;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+      z-index: 10;
+      position: relative;
+    }
+
+    .brand-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-bottom: 2rem;
+    }
+
+    .logo-wrapper {
+      margin-bottom: 1.5rem;
+      transition: transform 0.3s ease;
+    }
+
+    .logo-wrapper:hover {
+      transform: scale(1.05);
+    }
+
+    .brand-title {
+      font-family: 'DM Serif Display', serif;
+      font-size: 38px;
+      font-weight: 400;
+      background: linear-gradient(135deg, var(--neon-green) 0%, var(--turquoise) 50%, var(--bright-blue) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 0.5rem;
+      letter-spacing: -0.02em;
+    }
+
+    .brand-headline {
+      font-size: 20px;
+      font-weight: 500;
+      color: var(--text-white);
+      margin-bottom: 1rem;
+      line-height: 1.3;
+    }
+
+    .brand-subheadline {
+      font-size: 14px;
+      color: var(--text-gray);
+      line-height: 1.6;
+      margin-bottom: 2.5rem;
+      max-width: 480px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .welcome-actions {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      width: 100%;
+    }
+
+    .btn-brand-primary {
+      width: 100%;
+      height: 48px;
+      background: linear-gradient(135deg, var(--brand) 0%, var(--turquoise) 100%);
+      color: #ffffff;
+      border: none;
+      border-radius: var(--radius);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      box-shadow: 0 4px 15px rgba(216, 90, 48, 0.2);
+    }
+
+    .btn-brand-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(216, 90, 48, 0.4);
+      background: linear-gradient(135deg, var(--neon-green) 0%, var(--turquoise) 100%);
+    }
+
+    .btn-brand-primary:active {
+      transform: translateY(0);
+    }
+
+    .btn-brand-outline {
+      width: 100%;
+      height: 48px;
+      background: transparent;
+      color: var(--text-white);
+      border: 1px solid var(--dark-border);
+      border-radius: var(--radius);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .btn-brand-outline:hover {
+      background: rgba(255, 255, 255, 0.05);
+      border-color: var(--turquoise);
+      color: var(--turquoise);
+    }
+
+    .btn-brand-link {
+      background: none;
+      border: none;
+      color: var(--text-gray);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 13px;
+      cursor: pointer;
+      margin-top: 1rem;
+      transition: color 0.15s;
+      text-decoration: underline;
+    }
+
+    .btn-brand-link:hover {
+      color: var(--neon-green);
+    }
+
+    /* Modal styles for login */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.7);
+      backdrop-filter: blur(10px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 500;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+      padding: 1rem;
+    }
+
+    .modal-overlay.open {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .login-card {
+      max-width: 420px;
+      width: 100%;
+      background: var(--dark-bg-card);
+      border: 1px solid var(--dark-border);
+      border-radius: var(--radius-lg);
+      padding: 2.5rem 2rem;
+      color: var(--text-white);
+      box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
+      transform: translateY(20px);
+      transition: transform 0.3s ease;
+    }
+
+    .modal-overlay.open .login-card {
+      transform: translateY(0);
+    }
+
+    .login-header {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+
+    .login-header h3 {
+      font-size: 22px;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+    }
+
+    .login-header p {
+      font-size: 13px;
+      color: var(--text-gray);
+    }
+
+    .dark-field {
+      margin-bottom: 1.25rem;
+    }
+
+    .dark-field label {
+      display: block;
+      font-size: 12px;
+      color: var(--text-gray);
+      margin-bottom: 6px;
+      font-weight: 500;
+    }
+
+    .dark-field input {
+      width: 100%;
+      height: 40px;
+      padding: 0 12px;
+      background: rgba(0, 0, 0, 0.2);
+      border: 1px solid var(--dark-border);
+      border-radius: var(--radius);
+      color: var(--text-white);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 14px;
+      outline: none;
+      transition: border-color 0.15s, box-shadow 0.15s;
+    }
+
+    .dark-field input:focus {
+      border-color: var(--turquoise);
+      box-shadow: 0 0 0 3px rgba(55, 138, 221, 0.15);
+    }
+
+    /* Toast container and toasts styling */
+    .toast-container {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      z-index: 1000;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      pointer-events: none;
+      max-width: 320px;
+      width: 100%;
+    }
+
+    .toast {
+      pointer-events: auto;
+      background: rgba(30, 30, 34, 0.9);
+      backdrop-filter: blur(15px);
+      color: var(--text-white);
+      border: 1px solid var(--dark-border);
+      padding: 12px 16px;
+      border-radius: var(--radius);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 13px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      transform: translateX(120%);
+      transition: transform 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    }
+
+    .toast.show {
+      transform: translateX(0);
+    }
+
+    .toast-icon {
+      font-size: 18px;
+      flex-shrink: 0;
+    }
+
+    .toast-message {
+      flex-grow: 1;
+    }
+
+    .toast-close {
+      background: none;
+      border: none;
+      color: var(--text-gray);
+      cursor: pointer;
+      font-size: 14px;
+      padding: 2px;
+    }
+
+    .toast.success {
+      border-left: 4px solid var(--bright-green);
+    }
+
+    .toast.success .toast-icon {
+      color: var(--bright-green);
+    }
+
+    .toast.error {
+      border-left: 4px solid #dc2626;
+    }
+
+    .toast.error .toast-icon {
+      color: #dc2626;
+    }
+
+    .toast.info {
+      border-left: 4px solid var(--bright-blue);
+    }
+
+    .toast.info .toast-icon {
+      color: var(--bright-blue);
+    }
+
+    /* Header User Indicator */
+    .nav-user-indicator {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
+      color: var(--text2);
+    }
+
+    .nav-user-indicator i {
+      color: var(--brand);
+    }
+
+    .nav-user-indicator .user-badge {
+      background: var(--brand-light);
+      color: var(--brand-text);
+      font-weight: 500;
+      padding: 2px 8px;
+      border-radius: 12px;
+    }
+
+    .logo-icon-svg {
+      width: 26px;
+      height: 26px;
+    }
+
+    /* FIN NUEVO: ESTILOS DE BIENVENIDA */
+  </style>
+</head>
+
+<body>
+
+  <!-- Contenedor global de Toasts -->
+  <div class="toast-container" id="toast-container"></div>
+
+  <nav>
+    <button class="menu-btn" onclick="toggleSidebar()"><i class="ti ti-menu-2"></i></button>
+    <a class="logo" href="#">
+      <div class="logo-dot"></div>
+      Costify
+    </a>
+    <div class="nav-links">
+      <button class="nav-btn active" onclick="showNav(this,'calc')">Calculadora</button>
+      <button class="nav-btn" onclick="showNav(this,'info')">Más info</button>
+    </div>
+  </nav>
+
+  <div id="nav-calc">
+    <div class="hero">
+      <h1>Calcula el precio justo de tu producto</h1>
+      <p>Ingresa tus costos y el margen que deseas ganar. Costify calcula el IVA boliviano (13%) y te da el precio
+        de venta ideal.</p>
+      <div class="tabs">
+        <button class="tab active" onclick="showTab(this,'basico')">Básico — Gratis</button>
+        <button class="tab" onclick="showTab(this,'pro')">Pro — Avanzado</button>
+      </div>
+    </div>
+
+<!-- INICIO ASISTENTE IA DE COSTOS (REAL) -->
+<div id="ia-costos-screen" style="max-width:760px;margin:2rem auto;padding:0 1rem;">
+  <div class="chat-card">
+    <div class="chat-header">
+      <div class="chat-avatar"><i class="ti ti-robot"></i></div>
+      <div class="chat-header-info">
+        <h3>CostifAI</h3>
+        <p>Te ayudo a completar tu cálculo conversando, paso a paso.</p>
+      </div>
+      <div class="chat-status"></div>
+    </div>
+
+    <div class="chat-messages" id="ia-chat-messages">
+      <div class="msg bot">
+        <div class="msg-bubble">
+          ¡Hola! Soy <strong>CostifAI</strong> 🤖 Te voy a ayudar a calcular los costos de tu primer producto, simplemente conversando conmigo.<br><br>
+          Si prefieres, también puedes hacerlo tú mismo dándole al botón <strong>"Prefiero calcular mis costos manualmente"</strong> más abajo.<br><br>
+          Para empezar, ¿cómo se llama tu producto?
+        </div>
+      </div>
+      <div class="typing" id="ia-typing">
+        <div class="typing-bubble">
+          <div class="typing-dot"></div>
+          <div class="typing-dot"></div>
+          <div class="typing-dot"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="chat-input-wrap">
+      <input class="chat-input" id="ia-chat-input" placeholder="Escribe tu respuesta..."
+        onkeydown="if(event.key==='Enter') enviarMensajeIA()" />
+      <button class="chat-send" id="ia-chat-send-btn" onclick="enviarMensajeIA()"><i class="ti ti-send"></i></button>
+    </div>
+
+    <div style="padding:1rem;">
+      <button class="btn-secondary" onclick="mostrarFormularioManual()" style="width:100%;">
+        Prefiero calcular mis costos manualmente
+      </button>
+    </div>
+  </div>
+</div>
+
+<script>
+// Endpoint del worker (mismo que usa el chat de Soporte con IA)
+// URL de tu Worker de Cloudflare que ahora conecta con Gemini (ver worker-gemini.js)
+const COSTIFY_IA_ENDPOINT = 'https://costify-ia.jose-aleurdi3.workers.dev/';
+
+const SYSTEM_PROMPT_IA_COSTOS = `Eres CostifAI, el asistente conversacional de Costify. Ayudas a emprendedores bolivianos a completar, de forma natural y amigable, el formulario de costos de su producto, conversando en español.
+
+Debes ir preguntando por estos campos (adapta el orden si el usuario da varios datos juntos o se salta alguno):
+1. prod-name (texto): nombre del producto
+2. c-materia (número, en Bs): costo de materia prima
+3. c-transporte (número, en Bs): costo de transporte
+4. c-mano (número, en Bs): costo de mano de obra
+5. c-embalaje (número, en Bs): costo de embalaje/packaging
+6. c-electro (número, en Bs): electricidad y servicios
+7. c-admin (número, en Bs): gastos administrativos
+8. units (entero, mínimo 1): unidades que produce por lote
+9. margen (número, %): margen de ganancia deseado
+10. aplicar-iva (booleano): si se debe aplicar el IVA boliviano del 13%. Asume true salvo que el usuario diga que es comerciante informal o pida no aplicarlo.
+
+Reglas:
+- Si el usuario dice que un costo no aplica o es cero, regístralo como 0 (no lo dejes pendiente).
+- Si la respuesta es ambigua donde se espera un número, pide amablemente que aclare y no incluyas ese campo todavía.
+- Puedes extraer varios campos de un solo mensaje si el usuario los da juntos.
+- Marca "completo": true solo cuando ya tengas todos los campos, o el usuario indique que quiere continuar con lo que hay.
+- Responde ÚNICAMENTE con un objeto JSON válido, sin texto adicional, sin markdown ni backticks, con esta forma exacta:
+{"mensaje": "tu respuesta breve y cálida en español, incluyendo la siguiente pregunta si corresponde", "campos": {"id_del_campo": valor, "...": "..."}, "completo": true o false}
+- En "campos" incluye SOLO los campos que puedas confirmar con la información dada hasta ahora (no inventes valores).
+- "mensaje" debe ser corto (1-3 oraciones).`;
+
+let iaChatHistory = [];
+
+let iaEnviando = false;
+
+async function enviarMensajeIA() {
+  if (iaEnviando) return;
+  const input = document.getElementById('ia-chat-input');
+  const texto = input.value.trim();
+  if (!texto) return;
+
+  iaEnviando = true;
+  const btn = document.getElementById('ia-chat-send-btn');
+  btn.disabled = true;
+  btn.style.opacity = '0.5';
+  input.value = '';
+
+  agregarBurbujaIA(texto, 'user');
+  iaChatHistory.push({ role: 'user', content: texto });
+
+  const typing = document.getElementById('ia-typing');
+  typing.classList.add('visible');
+  const messages = document.getElementById('ia-chat-messages');
+  messages.scrollTop = messages.scrollHeight;
+
+  try {
+    const res = await fetch(COSTIFY_IA_ENDPOINT, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        max_tokens: 500,
+        system: SYSTEM_PROMPT_IA_COSTOS,
+        messages: iaChatHistory
+      })
+    });
+
+    const bodyTexto = await res.text();
+
+    // MODO DIAGNÓSTICO: si la petición HTTP falló, mostramos el status y el cuerpo crudo
+    if (!res.ok) {
+      typing.classList.remove('visible');
+      agregarBurbujaIA(
+        '⚠️ DIAGNÓSTICO — Status: ' + res.status + ' ' + res.statusText +
+        '<br>Respuesta del servidor: <code>' + bodyTexto.substring(0, 500) + '</code>',
+        'bot'
+      );
+      return;
+    }
+
+    let data;
+    try {
+      data = JSON.parse(bodyTexto);
+    } catch (e2) {
+      typing.classList.remove('visible');
+      agregarBurbujaIA('⚠️ DIAGNÓSTICO — El servidor respondió OK pero no es JSON válido: <code>' + bodyTexto.substring(0, 500) + '</code>', 'bot');
+      return;
+    }
+
+    if (!data.content || !data.content[0] || !data.content[0].text) {
+      typing.classList.remove('visible');
+      agregarBurbujaIA('⚠️ DIAGNÓSTICO — Estructura inesperada de respuesta: <code>' + JSON.stringify(data).substring(0, 500) + '</code>', 'bot');
+      return;
+    }
+
+    const rawText = data.content[0].text;
+    const limpio = rawText.replace(/```json|```/g, '').trim();
+
+    let obj;
+    try {
+      obj = JSON.parse(limpio);
+    } catch (parseErr) {
+      typing.classList.remove('visible');
+      agregarBurbujaIA('⚠️ DIAGNÓSTICO — La IA no devolvió JSON válido: <code>' + rawText.substring(0, 500) + '</code>', 'bot');
+      return;
+    }
+
+    iaChatHistory.push({ role: 'assistant', content: rawText });
+
+    typing.classList.remove('visible');
+    agregarBurbujaIA(obj.mensaje, 'bot');
+
+    if (obj.campos) aplicarCamposIA(obj.campos);
+
+    if (obj.completo === true) {
+      setTimeout(mostrarFormularioManual, 1200);
+    }
+  } catch (e) {
+    typing.classList.remove('visible');
+    agregarBurbujaIA('⚠️ DIAGNÓSTICO — Error de red/JavaScript: <code>' + (e.message || e) + '</code>', 'bot');
+  } finally {
+    setTimeout(() => {
+      iaEnviando = false;
+      btn.disabled = false;
+      btn.style.opacity = '1';
+    }, 2000);
+  }
+}
+
+function agregarBurbujaIA(texto, role) {
+  const messages = document.getElementById('ia-chat-messages');
+  const typing = document.getElementById('ia-typing');
+  const div = document.createElement('div');
+  div.className = 'msg ' + role;
+  div.innerHTML = '<div class="msg-bubble">' + texto + '</div>';
+  messages.insertBefore(div, typing);
+  messages.scrollTop = messages.scrollHeight;
+}
+
+function aplicarCamposIA(campos) {
+  const numericos = ['c-materia', 'c-transporte', 'c-mano', 'c-embalaje', 'c-electro', 'c-admin', 'margen'];
+
+  Object.keys(campos).forEach(id => {
+    const valor = campos[id];
+    if (id === 'prod-name') {
+      document.getElementById('prod-name').value = valor;
+    } else if (id === 'units') {
+      document.getElementById('units').value = Math.max(1, parseInt(valor) || 1);
+    } else if (id === 'aplicar-iva') {
+      document.getElementById('aplicar-iva').checked = !!valor;
+    } else if (numericos.includes(id)) {
+      const el = document.getElementById(id);
+      if (el) el.value = parseFloat(valor) || 0;
+    }
+  });
+
+  calcAuto();
+}
+
+function mostrarFormularioManual() {
+  document.getElementById('ia-costos-screen').style.display = 'none';
+  document.getElementById('tab-basico').style.display = 'block';
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  document.getElementById('tab-basico').style.display = 'none';
+});
+</script>
+<!-- FIN ASISTENTE IA DE COSTOS (REAL) -->
+
+<div class="content">
+      <div id="tab-basico" class="page visible">
+
+        <div class="card">
+          <div class="card-header">
+            <div class="card-icon"><i class="ti ti-box" aria-hidden="true"></i></div>
+            <div>
+              <div class="card-title">Tu producto</div>
+              <div class="card-sub">Información básica</div>
+            </div>
+            <span class="badge-free">Gratis</span>
+          </div>
+          <div class="row">
+            <div class="field">
+              <label>Nombre del producto</label>
+              <input type="text" id="prod-name" placeholder="Ej: Mantequilla de maní" />
+            </div>
+            <div class="field">
+              <label>Unidades por lote</label>
+              <input type="number" id="units" placeholder="Ej: 7" min="1" value="1" oninput="calcAuto()" />
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <div class="card-icon"><i class="ti ti-currency-dollar" aria-hidden="true"></i></div>
+            <div>
+              <div class="card-title">Costos del producto</div>
+              <div class="card-sub">Todo lo que gastas para producirlo (en Bs.)</div>
+            </div>
+            <span class="badge-free">Gratis</span>
+          </div>
+          <div class="row">
+            <div class="field">
+              <label>Materia prima</label>
+              <div class="prefix-wrap">
+                <span class="prefix">Bs.</span>
+                <input type="number" id="c-materia" placeholder="0.00" min="0" step="0.01" oninput="calcAuto()" />
+              </div>
+            </div>
+            <div class="field">
+              <label>Transporte</label>
+              <div class="prefix-wrap">
+                <span class="prefix">Bs.</span>
+                <input type="number" id="c-transporte" placeholder="0.00" min="0" step="0.01" oninput="calcAuto()" />
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="field">
+              <label>Mano de obra</label>
+              <div class="prefix-wrap">
+                <span class="prefix">Bs.</span>
+                <input type="number" id="c-mano" placeholder="0.00" min="0" step="0.01" oninput="calcAuto()" />
+              </div>
+            </div>
+            <div class="field">
+              <label>Embalaje / Packaging</label>
+              <div class="prefix-wrap">
+                <span class="prefix">Bs.</span>
+                <input type="number" id="c-embalaje" placeholder="0.00" min="0" step="0.01" oninput="calcAuto()" />
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="field">
+              <label>Electricidad / Servicios</label>
+              <div class="prefix-wrap">
+                <span class="prefix">Bs.</span>
+                <input type="number" id="c-electro" placeholder="0.00" min="0" step="0.01" oninput="calcAuto()" />
+              </div>
+            </div>
+            <div class="field">
+              <label>Gastos administrativos</label>
+              <div class="prefix-wrap">
+                <span class="prefix">Bs.</span>
+                <input type="number" id="c-admin" placeholder="0.00" min="0" step="0.01" oninput="calcAuto()" />
+              </div>
+            </div>
+          </div>
+
+          <div class="iva-toggle">
+            <input type="checkbox" id="aplicar-iva" checked onchange="calcAuto()" />
+            <label for="aplicar-iva">Aplicar IVA (13%) — desmarcar si eres comerciante informal</label>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <div class="card-icon"><i class="ti ti-percentage" aria-hidden="true"></i></div>
+            <div>
+              <div class="card-title">Ganancia deseada</div>
+              <div class="card-sub">¿Cuánto quieres ganar sobre tus costos?</div>
+            </div>
+            <span class="badge-free">Gratis</span>
+          </div>
+          <div class="row">
+            <div class="field">
+              <label>Margen de ganancia (%)</label>
+              <div class="prefix-wrap">
+                <span class="prefix">%</span>
+                <input type="number" id="margen" placeholder="30" min="0" max="500" step="1" value="30"
+                  oninput="calcAuto()" />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <button class="btn-primary" onclick="calcular()">
+            <i class="ti ti-calculator" aria-hidden="true"></i>
+            Calcular precio de venta
+          </button>
+
+          <div class="results" id="resultados">
+            <div class="divider"></div>
+            <div class="result-grid">
+              <div class="metric">
+                <div class="metric-label">Costo del lote</div>
+                <div class="metric-val" id="res-costo">Bs. 0</div>
+              </div>
+              <div class="metric">
+                <div class="metric-label">Costo por unidad</div>
+                <div class="metric-val" id="res-unidad">Bs. 0</div>
+              </div>
+              <div class="metric">
+                <div class="metric-label">Precio de venta lote</div>
+                <div class="metric-val highlight" id="res-venta">Bs. 0</div>
+              </div>
+              <div class="metric">
+                <div class="metric-label">Precio venta / unidad</div>
+                <div class="metric-val highlight" id="res-venta-unidad">Bs. 0</div>
+              </div>
+            </div>
+            <div class="breakdown">
+              <div class="breakdown-title">Desglose completo</div>
+              <div class="br-row"><span class="br-label">Materia prima</span><span class="br-val" id="br-materia">Bs.
+                  0.00</span></div>
+              <div class="br-row"><span class="br-label">Transporte</span><span class="br-val" id="br-transporte">Bs.
+                  0.00</span></div>
+              <div class="br-row"><span class="br-label">Mano de obra</span><span class="br-val" id="br-mano">Bs.
+                  0.00</span></div>
+              <div class="br-row"><span class="br-label">Embalaje</span><span class="br-val" id="br-embalaje">Bs.
+                  0.00</span></div>
+              <div class="br-row"><span class="br-label">Electricidad</span><span class="br-val" id="br-electro">Bs.
+                  0.00</span></div>
+              <div class="br-row"><span class="br-label">Gastos admin.</span><span class="br-val" id="br-admin">Bs.
+                  0.00</span></div>
+              <div class="br-row"><span class="br-label">Subtotal costos</span><span class="br-val" id="br-sub">Bs.
+                  0.00</span></div>
+              <div class="br-row"><span class="br-label">IVA (13%)</span><span class="br-val" id="br-iva">Bs.
+                  0.00</span></div>
+              <div class="br-row"><span class="br-label">Ganancia (<span id="br-pct">30</span>%)</span><span
+                  class="br-val" id="br-ganancia">Bs. 0.00</span></div>
+              <div class="br-row total"><span class="br-label">Precio sugerido de venta</span><span class="br-val"
+                  id="br-total">Bs. 0.00</span></div>
+            </div>
+            <!-- INICIO NUEVO: HISTORIAL DE COSTOS -->
+            <button class="btn-secondary" id="btn-guardar-calculo" onclick="guardarCalculo()"
+              style="margin-top: 1rem; width: 100%;">
+              <i class="ti ti-device-floppy"></i> Guardar cálculo en historial
+            </button>
+            <div id="guardar-mensaje" class="feedback-msg" style="display: none; margin-top: 0.5rem;"></div>
+            <!-- FIN NUEVO: HISTORIAL DE COSTOS -->
+          </div>
+        </div>
+
+        <div class="pro-banner">
+          <h3>⭐ Desbloquea Costify Pro</h3>
+          <p>Accede a costos adicionales personalizados, comparador de productos,<br>exportación a PDF y más
+            herramientas para tu emprendimiento.</p>
+          <div class="pro-features">
+            <span class="feat-pill">+ Costos personalizados</span>
+            <span class="feat-pill">↑ Exportar a PDF</span>
+            <span class="feat-pill">◈ Comparar productos</span>
+            <span class="feat-pill">↗ Análisis de márgenes</span>
+          </div>
+          <a href="#info" class="btn-upgrade" onclick="goInfo()">Ver planes Pro →</a>
+        </div>
+
+      </div>
+
+      <div id="tab-pro" class="page">
+        <div class="card">
+          <div class="card-header">
+            <div class="card-icon" style="background:#fef3c7;color:#92400e;"><i class="ti ti-lock"
+                aria-hidden="true"></i></div>
+            <div>
+              <div class="card-title">Costos avanzados</div>
+              <div class="card-sub">Disponible con suscripción Pro</div>
+            </div>
+            <span class="badge-pro"><i class="ti ti-lock" style="font-size:11px"></i> Pro</span>
+          </div>
+          <div class="row">
+            <div class="field pro-field">
+              <label>Depreciación de equipo</label>
+              <div class="prefix-wrap"><span class="prefix">Bs.</span><input type="number" placeholder="0.00"
+                  disabled /><span class="lock-icon"><i class="ti ti-lock"></i></span></div>
+            </div>
+            <div class="field pro-field">
+              <label>Alquiler del espacio</label>
+              <div class="prefix-wrap"><span class="prefix">Bs.</span><input type="number" placeholder="0.00"
+                  disabled /><span class="lock-icon"><i class="ti ti-lock"></i></span></div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="field pro-field">
+              <label>Marketing / Publicidad</label>
+              <div class="prefix-wrap"><span class="prefix">Bs.</span><input type="number" placeholder="0.00"
+                  disabled /><span class="lock-icon"><i class="ti ti-lock"></i></span></div>
+            </div>
+            <div class="field pro-field">
+              <label>Costo financiero / interés</label>
+              <div class="prefix-wrap"><span class="prefix">Bs.</span><input type="number" placeholder="0.00"
+                  disabled /><span class="lock-icon"><i class="ti ti-lock"></i></span></div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="field pro-field">
+              <label>Costo personalizado 1</label>
+              <div class="prefix-wrap"><span class="prefix">Bs.</span><input type="number" placeholder="0.00"
+                  disabled /><span class="lock-icon"><i class="ti ti-lock"></i></span></div>
+            </div>
+            <div class="field pro-field">
+              <label>Costo personalizado 2</label>
+              <div class="prefix-wrap"><span class="prefix">Bs.</span><input type="number" placeholder="0.00"
+                  disabled /><span class="lock-icon"><i class="ti ti-lock"></i></span></div>
+            </div>
+          </div>
+          <div style="text-align:center;padding:1rem 0 0;">
+            <a href="#info" class="btn-upgrade" onclick="goInfo()">Suscribirme a Pro →</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="nav-info" style="display:none;">
+    <div class="content" style="padding-top:2rem;">
+      <div class="lm-card">
+        <div class="lm-icon"><i class="ti ti-mail" aria-hidden="true"></i></div>
+        <h2>Aprende a fijar precios como un experto</h2>
+        <p class="lm-sub">Recibe gratis nuestra guía <strong>«Los 5 errores que cometen los emprendedores al poner
+            precios»</strong> y empieza a vender con más ganancia.</p>
+        <div class="lm-benefits">
+          <div class="lm-benefit"><i class="ti ti-check" aria-hidden="true"></i> Guía PDF gratuita</div>
+          <div class="lm-benefit"><i class="ti ti-check" aria-hidden="true"></i> Tips de pricing para tu negocio</div>
+          <div class="lm-benefit"><i class="ti ti-check" aria-hidden="true"></i> Acceso anticipado a Pro</div>
+        </div>
+        <div style="max-width:480px; margin:0 auto;">
+          <iframe
+            src="https://18a4a80c.sibforms.com/serve/MUIFAGuF8X58D9iN1bd4vPySLv62FpMhpBg_Wby2ccy8ZrTHROiDCoHPvhztmKkhKS3xJUl82cK56_hhC00TopyLWWpP_KQSImd2DtgQLQGFz2hs2B6ZS52p5_uV8c_y0pVVWTng9Kw9EIN0UnlQYFcWIfoggiLj91HxiB-y_upE0NGcDv6dRMo8D62d7qED9GRFboQzpeKIyzRP1A=="
+            frameborder="0" scrolling="auto" allowfullscreen
+            style="display:block; width:100%; height:300px; border-radius:12px; border:0.5px solid #e0e5ec;"></iframe>
+          <p class="lm-note">Sin spam. Puedes darte de baja cuando quieras.</p>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <div class="card-icon"><i class="ti ti-users" aria-hidden="true"></i></div>
+          <div>
+            <div class="card-title">Lo que dicen los emprendedores</div>
+          </div>
+        </div>
+        <div class="testimonials">
+          <div class="testi">
+            <p class="testi-text">"Antes ponía precios a ojo. Con Costify descubrí que estaba perdiendo Bs. 8 por
+              producto."</p>
+            <div class="testi-author">— Carla M., repostería, La Paz</div>
+          </div>
+          <div class="testi">
+            <p class="testi-text">"Super fácil de usar, en 5 minutos ya tenía el precio de mis velas calculado con IVA y
+              todo."</p>
+            <div class="testi-author">— Diego R., artesanías, Cochabamba</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer>© 2026 Costify · Hecho para emprendedores bolivianos</footer>
+
+  <script>
+
+    function toggleSidebar() {
+      document.getElementById('sidebar').classList.toggle('open');
+      document.getElementById('sidebar-overlay').classList.toggle('open');
+    }
+
+
+    function goSoporte() {
+      document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+      document.getElementById('nav-calc').style.display = 'none';
+      document.getElementById('nav-info').style.display = 'none';
+      document.getElementById('nav-foro').style.display = 'none';
+      document.getElementById('nav-soporte').style.display = 'none';
+      document.getElementById('nav-soporte').style.display = 'block';
+    }
+
+    const chatHistory = [];
+
+    function sendSuggestion(text) {
+      document.getElementById('chat-input').value = text;
+      sendMessage();
+    }
+
+    function addMessage(text, role) {
+      const messages = document.getElementById('chat-messages');
+      const typing = document.getElementById('typing');
+      const div = document.createElement('div');
+      div.className = 'msg ' + role;
+      const now = new Date().toLocaleTimeString('es-BO', { hour: '2-digit', minute: '2-digit' });
+      div.innerHTML = '<div class="msg-bubble">' + text + '</div><div class="msg-time">' + now + '</div>';
+      messages.insertBefore(div, typing);
+      messages.scrollTop = messages.scrollHeight;
+    }
+
+    let soporteEnviando = false;
+
+    async function sendMessage() {
+      if (soporteEnviando) return;
+      const input = document.getElementById('chat-input');
+      const text = input.value.trim();
+      if (!text) return;
+
+      soporteEnviando = true;
+      const btn = document.getElementById('soporte-chat-send-btn');
+      btn.disabled = true;
+      btn.style.opacity = '0.5';
+      input.value = '';
+
+      addMessage(text, 'user');
+      chatHistory.push({ role: 'user', content: text });
+
+      const typing = document.getElementById('typing');
+      typing.classList.add('visible');
+      document.getElementById('chat-messages').scrollTop = 999999;
+
+      try {
+        const res = await fetch(COSTIFY_IA_ENDPOINT, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            max_tokens: 1000,
+            system: 'Eres CostifAI, el asistente virtual de Costify, una calculadora de costos para emprendedores bolivianos. Ayudas con: uso de la calculadora (costos, IVA 13% de Bolivia, margen de ganancia, precio de venta por unidad y por lote), conceptos de fijación de precios, finanzas básicas para emprendedores, estrategias de pricing, y consejos de negocio para el mercado boliviano. Responde siempre en español, de forma amigable, clara y concisa. Máximo 3 párrafos por respuesta.',
+            messages: chatHistory
+          })
+        });
+
+        const bodyTexto = await res.text();
+
+        if (!res.ok) {
+          typing.classList.remove('visible');
+          addMessage(
+            '⚠️ DIAGNÓSTICO — Status: ' + res.status + ' ' + res.statusText +
+            '<br>Respuesta del servidor: <code>' + bodyTexto.substring(0, 500) + '</code>',
+            'bot'
+          );
+          return;
+        }
+
+        let data;
+        try {
+          data = JSON.parse(bodyTexto);
+        } catch (e2) {
+          typing.classList.remove('visible');
+          addMessage('⚠️ DIAGNÓSTICO — El servidor respondió OK pero no es JSON válido: <code>' + bodyTexto.substring(0, 500) + '</code>', 'bot');
+          return;
+        }
+
+        if (!data.content || !data.content[0] || !data.content[0].text) {
+          typing.classList.remove('visible');
+          addMessage('⚠️ DIAGNÓSTICO — Estructura inesperada de respuesta: <code>' + JSON.stringify(data).substring(0, 500) + '</code>', 'bot');
+          return;
+        }
+
+        const reply = data.content[0].text;
+        typing.classList.remove('visible');
+        addMessage(reply, 'bot');
+        chatHistory.push({ role: 'assistant', content: reply });
+      } catch (e) {
+        typing.classList.remove('visible');
+        addMessage('⚠️ DIAGNÓSTICO — Error de red/JavaScript: <code>' + (e.message || e) + '</code>', 'bot');
+      } finally {
+        setTimeout(() => {
+          soporteEnviando = false;
+          btn.disabled = false;
+          btn.style.opacity = '1';
+        }, 2000);
+      }
+    }
+
+    function goForo() {
+      document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+      document.getElementById('nav-calc').style.display = 'none';
+      document.getElementById('nav-info').style.display = 'none';
+      document.getElementById('nav-soporte').style.display = 'none';
+      document.getElementById('nav-foro').style.display = 'block';
+    }
+
+    function showNav(btn, page) {
+      document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      document.getElementById('nav-calc').style.display = page === 'calc' ? 'block' : 'none';
+      document.getElementById('nav-info').style.display = page === 'info' ? 'block' : 'none';
+      document.getElementById('nav-foro').style.display = 'none';
+      document.getElementById('nav-soporte').style.display = 'none';
+    }
+
+    function goInfo() {
+      document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.nav-btn')[1].classList.add('active');
+      document.getElementById('nav-calc').style.display = 'none';
+      document.getElementById('nav-info').style.display = 'block';
+    }
+
+    function showTab(btn, tab) {
+      document.querySelectorAll('.tab').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      document.getElementById('tab-basico').classList.toggle('visible', tab === 'basico');
+      document.getElementById('tab-pro').classList.toggle('visible', tab === 'pro');
+    }
+
+    function getVal(id) { return parseFloat(document.getElementById(id).value) || 0; }
+    function fmt(n) { return 'Bs. ' + n.toFixed(2); }
+
+    function calcAuto() {
+      if (document.getElementById('resultados').classList.contains('visible')) calcular();
+    }
+
+    function calcular() {
+      const materia = getVal('c-materia');
+      const transporte = getVal('c-transporte');
+      const mano = getVal('c-mano');
+      const embalaje = getVal('c-embalaje');
+      const electro = getVal('c-electro');
+      const admin = getVal('c-admin');
+      const units = Math.max(1, getVal('units'));
+      const margen = getVal('margen');
+      const aplicaIVA = document.getElementById('aplicar-iva').checked;
+
+      const subtotal = materia + transporte + mano + embalaje + electro + admin;
+      const iva = aplicaIVA ? subtotal * 0.13 : 0;
+      const costoLote = subtotal + iva;
+      const ganancia = costoLote * (margen / 100);
+      const total = costoLote + ganancia;
+      const costoPorUnidad = costoLote / units;
+      const ventaPorUnidad = total / units;
+
+      document.getElementById('res-costo').textContent = fmt(costoLote);
+      document.getElementById('res-unidad').textContent = fmt(costoPorUnidad);
+      document.getElementById('res-venta').textContent = fmt(total);
+      document.getElementById('res-venta-unidad').textContent = fmt(ventaPorUnidad);
+      document.getElementById('br-materia').textContent = fmt(materia);
+      document.getElementById('br-transporte').textContent = fmt(transporte);
+      document.getElementById('br-mano').textContent = fmt(mano);
+      document.getElementById('br-embalaje').textContent = fmt(embalaje);
+      document.getElementById('br-electro').textContent = fmt(electro);
+      document.getElementById('br-admin').textContent = fmt(admin);
+      document.getElementById('br-sub').textContent = fmt(subtotal);
+      document.getElementById('br-iva').textContent = aplicaIVA ? fmt(iva) : 'No aplica';
+      document.getElementById('br-pct').textContent = Math.round(margen);
+      document.getElementById('br-ganancia').textContent = fmt(ganancia);
+      document.getElementById('br-total').textContent = fmt(total);
+
+      document.getElementById('resultados').classList.add('visible');
+    }
+
+    // INICIO NUEVO: FUNCIONES EXCEL Y PERFIL
+
+    // Toast alert notification system
+    function showToast(message, type = "success") {
+      const container = document.getElementById('toast-container');
+      if (!container) return;
+
+      const toast = document.createElement('div');
+      toast.className = `toast ${type}`;
+
+      let icon = "ti-circle-check";
+      if (type === "error") icon = "ti-alert-circle";
+      if (type === "info") icon = "ti-info-circle";
+
+      toast.innerHTML = `
+        <span class="toast-icon"><i class="ti ${icon}"></i></span>
+        <span class="toast-message">${message}</span>
+        <button class="toast-close" onclick="this.parentElement.remove()"><i class="ti ti-x"></i></button>
+      `;
+
+      container.appendChild(toast);
+
+      setTimeout(() => {
+        toast.classList.add('show');
+      }, 10);
+
+      setTimeout(() => {
+        toast.classList.remove('show');
+        setTimeout(() => {
+          toast.remove();
+        }, 300);
+      }, 4000);
+    }
+
+    // Hide the cost-history and profile views whenever the user navigates elsewhere
+    document.addEventListener("DOMContentLoaded", () => {
+      const originalShowNav = showNav;
+      showNav = function (btn, page) {
+        originalShowNav(btn, page);
+        document.getElementById('nav-historial').style.display = 'none';
+        document.getElementById('nav-perfil').style.display = 'none';
+      };
+
+      const originalGoSoporte = goSoporte;
+      goSoporte = function () {
+        originalGoSoporte();
+        document.getElementById('nav-historial').style.display = 'none';
+        document.getElementById('nav-perfil').style.display = 'none';
+      };
+
+      const originalGoForo = goForo;
+      goForo = function () {
+        originalGoForo();
+        document.getElementById('nav-historial').style.display = 'none';
+        document.getElementById('nav-perfil').style.display = 'none';
+      };
+
+      const originalGoInfo = goInfo;
+      goInfo = function () {
+        originalGoInfo();
+        document.getElementById('nav-historial').style.display = 'none';
+        document.getElementById('nav-perfil').style.display = 'none';
+      };
+    });
+
+    function goHistorial() {
+      document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+      document.getElementById('nav-calc').style.display = 'none';
+      document.getElementById('nav-info').style.display = 'none';
+      document.getElementById('nav-foro').style.display = 'none';
+      document.getElementById('nav-soporte').style.display = 'none';
+      document.getElementById('nav-perfil').style.display = 'none';
+      document.getElementById('nav-historial').style.display = 'block';
+      renderHistorial();
+    }
+
+    // INICIO NUEVO: PERFIL
+    function goPerfil() {
+      document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+      document.getElementById('nav-calc').style.display = 'none';
+      document.getElementById('nav-info').style.display = 'none';
+      document.getElementById('nav-foro').style.display = 'none';
+      document.getElementById('nav-soporte').style.display = 'none';
+      document.getElementById('nav-historial').style.display = 'none';
+      document.getElementById('nav-perfil').style.display = 'block';
+      cargarPerfil();
+      document.getElementById('perfil-privacy-overlay').classList.add('open');
+    }
+
+    function cerrarModalPrivacidadPerfil() {
+      document.getElementById('perfil-privacy-overlay').classList.remove('open');
+    }
+
+    function cargarPerfil() {
+      let perfil = {};
+      const raw = localStorage.getItem('costifyPerfilUsuario');
+      if (raw) {
+        try {
+          perfil = JSON.parse(raw);
+        } catch (e) {
+          console.error(e);
+        }
+      }
+      document.getElementById('perfil-nombre').value = perfil.nombre || '';
+      document.getElementById('perfil-emprendimiento').value = perfil.emprendimiento || '';
+      document.getElementById('perfil-edad').value = perfil.edad || '';
+      document.getElementById('perfil-cumple').value = perfil.cumple || '';
+      document.getElementById('perfil-rubro').value = perfil.rubro || '';
+    }
+
+    function guardarPerfil() {
+      const perfil = {
+        nombre: document.getElementById('perfil-nombre').value.trim(),
+        emprendimiento: document.getElementById('perfil-emprendimiento').value.trim(),
+        edad: document.getElementById('perfil-edad').value,
+        cumple: document.getElementById('perfil-cumple').value,
+        rubro: document.getElementById('perfil-rubro').value
+      };
+
+      if (!perfil.nombre) {
+        showToast('Por favor ingresa tu nombre.', 'error');
+        return;
+      }
+
+      localStorage.setItem('costifyPerfilUsuario', JSON.stringify(perfil));
+      showToast('Perfil guardado con éxito.', 'success');
+    }
+    // FIN NUEVO: PERFIL
+
+    // COST SAVE AND HISTORY
+    function guardarCalculo() {
+      const nombre = document.getElementById('prod-name').value.trim();
+      const materia = parseFloat(document.getElementById('c-materia').value) || 0;
+      const transporte = parseFloat(document.getElementById('c-transporte').value) || 0;
+      const mano = parseFloat(document.getElementById('c-mano').value) || 0;
+      const embalaje = parseFloat(document.getElementById('c-embalaje').value) || 0;
+      const electro = parseFloat(document.getElementById('c-electro').value) || 0;
+      const admin = parseFloat(document.getElementById('c-admin').value) || 0;
+      const units = Math.max(1, parseFloat(document.getElementById('units').value) || 1);
+      const margen = parseFloat(document.getElementById('margen').value) || 0;
+      const aplicaIVA = document.getElementById('aplicar-iva').checked;
+
+      const subtotal = materia + transporte + mano + embalaje + electro + admin;
+      const iva = aplicaIVA ? subtotal * 0.13 : 0;
+      const costoLote = subtotal + iva;
+      const ganancia = costoLote * (margen / 100);
+      const total = costoLote + ganancia;
+      const costoPorUnidad = costoLote / units;
+      const ventaPorUnidad = total / units;
+
+      if (!nombre) {
+        showToast("Por favor ingresa un nombre para el producto.", "error");
+        return;
+      }
+      if (costoLote === 0) {
+        showToast("El costo total no puede ser 0 para guardar.", "error");
+        return;
+      }
+
+      const now = new Date();
+      const fechaStr = now.toLocaleDateString('es-BO') + ' ' + now.toLocaleTimeString('es-BO', { hour: '2-digit', minute: '2-digit' });
+
+      const calculo = {
+        fecha: fechaStr,
+        timestamp: now.getTime(),
+        nombre,
+        units,
+        materia,
+        transporte,
+        mano,
+        embalaje,
+        electro,
+        admin,
+        aplicaIVA,
+        margen,
+        subtotal,
+        iva,
+        costoLote,
+        costoPorUnidad,
+        ganancia,
+        total,
+        ventaPorUnidad
+      };
+
+      let historial = [];
+      const rawHistorial = localStorage.getItem('costifyHistorialCostos');
+      if (rawHistorial) {
+        try {
+          historial = JSON.parse(rawHistorial);
+        } catch (e) {
+          console.error(e);
+        }
+      }
+
+      historial.push(calculo);
+      localStorage.setItem('costifyHistorialCostos', JSON.stringify(historial));
+
+      showToast("Cálculo guardado con éxito en el historial.", "success");
+    }
+
+    // COST HISTORY VIEW MANAGEMENT
+    let filtroActual = 'todos';
+
+    function filtrarHistorial(filtro) {
+      filtroActual = filtro;
+      document.getElementById('btn-filtro-todos').classList.toggle('active', filtro === 'todos');
+      document.getElementById('btn-filtro-ultimo').classList.toggle('active', filtro === 'ultimo');
+      renderHistorialTable();
+    }
+
+    function renderHistorial() {
+      let historial = [];
+      const rawHistorial = localStorage.getItem('costifyHistorialCostos');
+      if (rawHistorial) {
+        try {
+          historial = JSON.parse(rawHistorial);
+        } catch (e) {
+          console.error(e);
+        }
+      }
+
+      calcularResumenes(historial);
+      renderCanvasChart(historial);
+      renderHistorialTable();
+    }
+
+    function calcularResumenes(historial) {
+      const count = historial.length;
+      if (count === 0) {
+        document.getElementById('hist-total-calc').textContent = '0';
+        document.getElementById('hist-prom-costo').textContent = 'Bs. 0.00';
+        document.getElementById('hist-prom-precio').textContent = 'Bs. 0.00';
+        document.getElementById('hist-max-min').textContent = '- / -';
+        document.getElementById('hist-analisis-card').style.display = 'none';
+        return;
+      }
+
+      const sumCosto = historial.reduce((sum, h) => sum + h.costoLote, 0);
+      const sumPrecio = historial.reduce((sum, h) => sum + h.total, 0);
+      const avgCosto = sumCosto / count;
+      const avgPrecio = sumPrecio / count;
+
+      let maxH = historial[0];
+      let minH = historial[0];
+      historial.forEach(h => {
+        if (h.costoLote > maxH.costoLote) maxH = h;
+        if (h.costoLote < minH.costoLote) minH = h;
+      });
+
+      document.getElementById('hist-total-calc').textContent = count;
+      document.getElementById('hist-prom-costo').textContent = fmt(avgCosto);
+      document.getElementById('hist-prom-precio').textContent = fmt(avgPrecio);
+
+      document.getElementById('hist-max-min').innerHTML =
+        `Máx: ${maxH.nombre.substring(0, 8)} (${fmt(maxH.costoLote)})<br>` +
+        `Mín: ${minH.nombre.substring(0, 8)} (${fmt(minH.costoLote)})`;
+
+      realizarAnalisisCostos(historial);
+    }
+
+    function realizarAnalisisCostos(historial) {
+      const card = document.getElementById('hist-analisis-card');
+      const textEl = document.getElementById('analisis-content');
+
+      if (historial.length < 2) {
+        card.style.display = 'none';
+        return;
+      }
+
+      const ultimoCalc = historial[historial.length - 1];
+
+      let prevCalc = null;
+      for (let i = historial.length - 2; i >= 0; i--) {
+        if (historial[i].nombre.toLowerCase() === ultimoCalc.nombre.toLowerCase()) {
+          prevCalc = historial[i];
+          break;
+        }
+      }
+
+      if (!prevCalc) {
+        card.style.display = 'none';
+        return;
+      }
+
+      card.style.display = 'block';
+
+      const costoUltimo = ultimoCalc.costoPorUnidad;
+      const costoPrev = prevCalc.costoPorUnidad;
+      const diff = costoUltimo - costoPrev;
+      const pct = costoPrev > 0 ? (diff / costoPrev) * 100 : 0;
+
+      let html = '';
+      if (diff > 0) {
+        html = `<p style="font-size: 13px; color: var(--text2); line-height: 1.6;">El costo unitario de <strong>${ultimoCalc.nombre}</strong> subió de <strong>${fmt(costoPrev)}</strong> a <strong>${fmt(costoUltimo)}</strong> (un incremento de <span class="text-danger" style="font-weight: 600;">+${pct.toFixed(2)}%</span>).</p>`;
+        if (pct > 15) {
+          html += `
+            <div class="feedback-msg error" style="margin-top: 1rem; display: flex; align-items: center; gap: 8px;">
+              <i class="ti ti-alert-triangle" style="font-size: 16px;"></i>
+              <span>Alerta: el costo de este producto aumentó significativamente.</span>
+            </div>
+          `;
+        }
+      } else if (diff < 0) {
+        html = `<p style="font-size: 13px; color: var(--text2); line-height: 1.6;">El costo unitario de <strong>${ultimoCalc.nombre}</strong> bajó de <strong>${fmt(costoPrev)}</strong> a <strong>${fmt(costoUltimo)}</strong> (una reducción de <span style="color: #15803d; font-weight: 600;">${pct.toFixed(2)}%</span>).</p>`;
+      } else {
+        html = `<p style="font-size: 13px; color: var(--text2); line-height: 1.6;">El costo unitario de <strong>${ultimoCalc.nombre}</strong> se mantuvo sin cambios en <strong>${fmt(costoUltimo)}</strong> (0.00%).</p>`;
+      }
+
+      textEl.innerHTML = html;
+    }
+
+    function renderCanvasChart(historial) {
+      const canvas = document.getElementById('canvas-historial');
+      if (!canvas) return;
+      const ctx = canvas.getContext('2d');
+
+      const rect = canvas.getBoundingClientRect();
+      canvas.width = rect.width * window.devicePixelRatio;
+      canvas.height = rect.height * window.devicePixelRatio;
+      ctx.scale(window.devicePixelRatio, window.devicePixelRatio);
+
+      const width = rect.width;
+      const height = rect.height;
+
+      ctx.clearRect(0, 0, width, height);
+
+      if (historial.length === 0) {
+        ctx.font = '13px "DM Sans", sans-serif';
+        ctx.fillStyle = '#888888';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillText('No hay datos en el historial aún', width / 2, height / 2);
+        return;
+      }
+
+      const values = historial.map(h => h.costoLote);
+      const labels = historial.map(h => h.nombre.substring(0, 8));
+
+      const maxVal = Math.max(...values) * 1.15 || 10;
+      const minVal = 0;
+
+      const paddingLeft = 50;
+      const paddingRight = 20;
+      const paddingTop = 20;
+      const paddingBottom = 35;
+
+      const chartWidth = width - paddingLeft - paddingRight;
+      const chartHeight = height - paddingTop - paddingBottom;
+
+      // Draw grid
+      const gridLines = 4;
+      ctx.strokeStyle = 'rgba(0, 0, 0, 0.05)';
+      ctx.lineWidth = 1;
+      ctx.font = '10px "DM Sans", sans-serif';
+      ctx.fillStyle = '#888888';
+      ctx.textAlign = 'right';
+      ctx.textBaseline = 'middle';
+
+      for (let i = 0; i <= gridLines; i++) {
+        const val = minVal + (maxVal - minVal) * (i / gridLines);
+        const y = paddingTop + chartHeight - (i / gridLines) * chartHeight;
+
+        ctx.beginPath();
+        ctx.moveTo(paddingLeft, y);
+        ctx.lineTo(width - paddingRight, y);
+        ctx.stroke();
+
+        ctx.fillText('Bs. ' + Math.round(val), paddingLeft - 8, y);
+      }
+
+      const points = [];
+      const count = values.length;
+
+      for (let i = 0; i < count; i++) {
+        const x = paddingLeft + (count > 1 ? (i / (count - 1)) * chartWidth : chartWidth / 2);
+        const y = paddingTop + chartHeight - ((values[i] - minVal) / (maxVal - minVal)) * chartHeight;
+        points.push({ x, y });
+      }
+
+      // Draw area gradient
+      if (count > 0) {
+        ctx.beginPath();
+        ctx.moveTo(points[0].x, paddingTop + chartHeight);
+        points.forEach(p => ctx.lineTo(p.x, p.y));
+        ctx.lineTo(points[points.length - 1].x, paddingTop + chartHeight);
+        ctx.closePath();
+
+        const grad = ctx.createLinearGradient(0, paddingTop, 0, paddingTop + chartHeight);
+        grad.addColorStop(0, 'rgba(26, 110, 245, 0.15)');
+        grad.addColorStop(1, 'rgba(26, 110, 245, 0.0)');
+        ctx.fillStyle = grad;
+        ctx.fill();
+      }
+
+      // Draw line
+      ctx.beginPath();
+      ctx.strokeStyle = '#1a6ef5';
+      ctx.lineWidth = 2;
+      points.forEach((p, i) => {
+        if (i === 0) ctx.moveTo(p.x, p.y);
+        else ctx.lineTo(p.x, p.y);
+      });
+      ctx.stroke();
+
+      // Draw dots and labels
+      ctx.fillStyle = '#1a6ef5';
+      ctx.strokeStyle = '#ffffff';
+      ctx.lineWidth = 1.5;
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'top';
+
+      const step = Math.max(1, Math.ceil(count / 6));
+
+      points.forEach((p, i) => {
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, 4, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.stroke();
+
+        if (i % step === 0 || i === count - 1) {
+          ctx.fillStyle = '#888888';
+          ctx.fillText(labels[i], p.x, paddingTop + chartHeight + 6);
+          ctx.fillStyle = '#1a6ef5';
+        }
+      });
+    }
+
+    function renderHistorialTable() {
+      const tbody = document.getElementById('historial-tbody');
+      if (!tbody) return;
+      tbody.innerHTML = '';
+
+      let historial = [];
+      const rawHistorial = localStorage.getItem('costifyHistorialCostos');
+      if (rawHistorial) {
+        try {
+          historial = JSON.parse(rawHistorial);
+        } catch (e) {
+          console.error(e);
+        }
+      }
+
+      if (historial.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="7" style="text-align: center; color: var(--text3); padding: 20px;">No hay cálculos guardados aún.</td></tr>`;
+        return;
+      }
+
+      let listToShow = [...historial].reverse();
+
+      if (filtroActual === 'ultimo') {
+        const seen = new Set();
+        listToShow = listToShow.filter(h => {
+          const nameLower = h.nombre.toLowerCase();
+          if (seen.has(nameLower)) {
+            return false;
+          }
+          seen.add(nameLower);
+          return true;
+        });
+      }
+
+      listToShow.forEach(h => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td>${h.fecha}</td>
+          <td><strong>${h.nombre}</strong></td>
+          <td>${fmt(h.costoLote)}</td>
+          <td>${fmt(h.total)}</td>
+          <td>${Math.round(h.margen)}%</td>
+          <td>${h.aplicaIVA ? '13%' : 'No'}</td>
+          <td><span style="color: var(--result); font-weight: 600;">${fmt(h.ventaPorUnidad)}</span></td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    // SheetJS Formula Excel Export
+    function exportarExcel() {
+      let historial = [];
+      const rawHistorial = localStorage.getItem('costifyHistorialCostos');
+      if (rawHistorial) {
+        try {
+          historial = JSON.parse(rawHistorial);
+        } catch (e) {
+          console.error(e);
+        }
+      }
+
+      if (historial.length === 0) {
+        showToast("No hay cálculos para exportar.", "error");
+        return;
+      }
+
+      const wb = XLSX.utils.book_new();
+
+      const headers = [
+        "Fecha", "Producto", "Unidades", "Materia Prima (Bs)", "Transporte (Bs)",
+        "Mano de Obra (Bs)", "Embalaje (Bs)", "Electricidad/Servicios (Bs)",
+        "Gastos Admin (Bs)", "Subtotal Costos (Bs)", "IVA Aplicado", "Monto IVA (Bs)",
+        "Margen (%)", "Ganancia (Bs)", "Costo Total Lote (Bs)", "Costo por Unidad (Bs)",
+        "Precio Venta Lote (Bs)", "Precio Venta Unidad (Bs)"
+      ];
+
+      const ws_historial_data = [headers];
+
+      historial.forEach((h, index) => {
+        const r = index + 2;
+        const row = [
+          h.fecha,
+          h.nombre,
+          h.units,
+          h.materia,
+          h.transporte,
+          h.mano,
+          h.embalaje,
+          h.electro,
+          h.admin,
+          { t: 'n', f: `SUM(D${r}:I${r})` },
+          h.aplicaIVA ? "Sí" : "No",
+          { t: 'n', f: `IF(K${r}="Sí", J${r}*0.13, 0)` },
+          h.margen,
+          { t: 'n', f: `O${r}*M${r}/100` },
+          { t: 'n', f: `J${r}+L${r}` },
+          { t: 'n', f: `O${r}/C${r}` },
+          { t: 'n', f: `O${r}+N${r}` },
+          { t: 'n', f: `Q${r}/C${r}` }
+        ];
+        ws_historial_data.push(row);
+      });
+
+      const ws_historial = XLSX.utils.aoa_to_sheet(ws_historial_data);
+      XLSX.utils.book_append_sheet(wb, ws_historial, "Historial");
+
+      const maxRow = historial.length + 1;
+      const ws_resumen_data = [
+        ["Dashboard de Resumen - Costify", ""],
+        ["", ""],
+        ["Métrica", "Fórmula/Valor"],
+        ["Total de cálculos guardados", { t: 'n', f: `COUNTA(Historial!B2:B${maxRow})` }],
+        ["Costo promedio lote (Bs.)", { t: 'n', f: `AVERAGE(Historial!O2:O${maxRow})` }],
+        ["Precio sugerido promedio (Bs.)", { t: 'n', f: `AVERAGE(Historial!Q2:Q${maxRow})` }],
+        ["Mayor costo de lote registrado (Bs.)", { t: 'n', f: `MAX(Historial!O2:O${maxRow})` }],
+        ["Menor costo de lote registrado (Bs.)", { t: 'n', f: `MIN(Historial!O2:O${maxRow})` }],
+        ["Último producto calculado", { t: 's', f: `Historial!B${maxRow}` }],
+        ["Fecha de exportación", new Date().toLocaleString('es-BO')],
+        ["", ""],
+        ["Resumen de Estructura de Costos del Emprendedor", ""],
+        ["Materia Prima Total Promedio", { t: 'n', f: `AVERAGE(Historial!D2:D${maxRow})` }],
+        ["Mano de Obra Total Promedio", { t: 'n', f: `AVERAGE(Historial!F2:F${maxRow})` }],
+        ["Transporte Total Promedio", { t: 'n', f: `AVERAGE(Historial!E2:E${maxRow})` }],
+        ["Otros Costos Promedio (Embalaje+Servicios+Admin)", { t: 'n', f: `AVERAGE(Historial!G2:G${maxRow})+AVERAGE(Historial!H2:H${maxRow})+AVERAGE(Historial!I2:I${maxRow})` }]
+      ];
+
+      const ws_resumen = XLSX.utils.aoa_to_sheet(ws_resumen_data);
+      XLSX.utils.book_append_sheet(wb, ws_resumen, "Resumen");
+
+      XLSX.writeFile(wb, "historial_costify.xlsx");
+      showToast("Historial exportado a Excel (.xlsx) con fórmulas.", "success");
+    }
+
+    function borrarHistorial() {
+      if (confirm("¿Estás seguro de que deseas borrar todo el historial de costos? Esta acción no se puede deshacer.")) {
+        localStorage.removeItem('costifyHistorialCostos');
+        renderHistorial();
+        showToast("Historial borrado con éxito.", "success");
+      }
+    }
+
+    // FIN NUEVO: FUNCIONES EXCEL Y PERFIL
+  </script>
+
+  <!-- SIDEBAR OVERLAY -->
+  <div class="sidebar-overlay" id="sidebar-overlay" onclick="toggleSidebar()"></div>
+
+  <!-- SIDEBAR -->
+  <div class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+      <div class="sidebar-logo" style="display: flex; align-items: center; gap: 8px;">
+        <svg viewBox="0 0 100 100" class="logo-icon-svg" style="width: 24px; height: 24px;">
+          <rect x="10" y="10" width="80" height="80" rx="18" fill="url(#sideLogoGrad)" />
+          <rect x="22" y="27" width="18" height="46" rx="5" fill="#4A1B0C" />
+          <path d="M33 50 H27 M27 50 L30 47 M27 50 L30 53" stroke="#FBF6EF" stroke-width="2.5" stroke-linecap="round" />
+          <rect x="47" y="27" width="12" height="12" rx="3" fill="#85B7EB" />
+          <rect x="65" y="27" width="16" height="12" rx="3" fill="#85B7EB" />
+          <rect x="47" y="44" width="12" height="12" rx="3" fill="#378ADD" />
+          <rect x="65" y="44" width="12" height="12" rx="3" fill="#378ADD" />
+          <rect x="47" y="61" width="12" height="12" rx="3" fill="#185FA5" />
+          <rect x="65" y="61" width="12" height="12" rx="3" fill="#185FA5" />
+          <defs>
+            <linearGradient id="sideLogoGrad" x1="0%" y1="100%" x2="100%" y2="0%">
+              <stop offset="0%" stop-color="#D85A30" />
+              <stop offset="100%" stop-color="#378ADD" />
+            </linearGradient>
+          </defs>
+        </svg>
+        Costify
+      </div>
+      <button class="sidebar-close" onclick="toggleSidebar()"><i class="ti ti-x"></i></button>
+    </div>
+    <div class="sidebar-menu">
+      <!-- INICIO NUEVO: HISTORIAL DE COSTOS -->
+      <button class="sidebar-item" onclick="goHistorial(); toggleSidebar()">
+        <i class="ti ti-history"></i> Historial de costos
+      </button>
+      <!-- FIN NUEVO: HISTORIAL DE COSTOS -->
+      <!-- INICIO NUEVO: PERFIL -->
+      <button class="sidebar-item" onclick="goPerfil(); toggleSidebar()">
+        <i class="ti ti-user-circle"></i> Mi perfil
+      </button>
+      <!-- FIN NUEVO: PERFIL -->
+      <div class="sidebar-section" style="margin-top:8px;">Comunidad</div>
+      <button class="sidebar-item" onclick="goSoporte(); toggleSidebar()">
+        <i class="ti ti-robot"></i> Soporte con IA
+      </button>
+      <button class="sidebar-item" onclick="goForo(); toggleSidebar()">
+        <i class="ti ti-messages"></i> Foro para emprendedores
+      </button>
+    </div>
+  </div>
+
+
+  <!-- SOPORTE PAGE -->
+  <div id="nav-soporte">
+    <div class="soporte-wrap">
+      <div class="chat-card">
+        <div class="chat-header">
+          <div class="chat-avatar"><i class="ti ti-robot"></i></div>
+          <div class="chat-header-info">
+            <h3>CostifAI</h3>
+            <p>IA especializada en precios y finanzas para emprendedores</p>
+          </div>
+          <div class="chat-status"></div>
+        </div>
+        <div class="chat-messages" id="chat-messages">
+          <div class="msg bot">
+            <div class="msg-bubble">¡Hola! Soy CostifAI 👋 Puedo ayudarte con dudas sobre la
+              calculadora, cómo fijar precios, IVA, márgenes de ganancia o cualquier consejo financiero para tu
+              emprendimiento. ¿En qué te puedo ayudar hoy?</div>
+            <div class="msg-time">Ahora</div>
+          </div>
+          <div class="typing" id="typing">
+            <div class="typing-bubble">
+              <div class="typing-dot"></div>
+              <div class="typing-dot"></div>
+              <div class="typing-dot"></div>
+            </div>
+          </div>
+        </div>
+        <div class="chat-suggestions">
+          <button class="suggestion" onclick="sendSuggestion('¿Cómo calculo mi margen de ganancia?')">¿Cómo calculo mi
+            margen?</button>
+          <button class="suggestion" onclick="sendSuggestion('¿Qué es el IVA y cómo afecta mi precio?')">¿Qué es el
+            IVA?</button>
+          <button class="suggestion" onclick="sendSuggestion('¿Cómo uso la calculadora de Costify?')">¿Cómo uso la
+            calculadora?</button>
+          <button class="suggestion" onclick="sendSuggestion('Tips para fijar precios competitivos en Bolivia')">Tips de
+            precios en Bolivia</button>
+        </div>
+        <div class="chat-input-wrap">
+          <input type="text" class="chat-input" id="chat-input" placeholder="Escribe tu pregunta..."
+            onkeydown="if(event.key==='Enter') sendMessage()" />
+          <button class="chat-send" id="soporte-chat-send-btn" onclick="sendMessage()"><i class="ti ti-send"></i></button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FORO PAGE -->
+  <div id="nav-foro">
+    <div class="foro-wrap">
+      <div class="foro-header">
+        <h2>💬 Foro para emprendedores</h2>
+        <p>Comparte tips, preguntas y experiencias sobre costos y precios con otros emprendedores bolivianos.</p>
+      </div>
+      <div class="card">
+        <div id="disqus_thread"></div>
+        <script>
+          var disqus_config = function () {
+            this.page.url = 'https://jose55urdi.github.io/Precio-Smart/';
+            this.page.identifier = 'foro-precio-smart';
+          };
+          (function () {
+            var d = document, s = d.createElement('script');
+            s.src = 'https://precio-smart.disqus.com/embed.js';
+            s.setAttribute('data-timestamp', +new Date());
+            (d.head || d.body).appendChild(s);
+          })();
+        </script>
+        <noscript>Activa JavaScript para ver los comentarios.</noscript>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- INICIO NUEVO: HISTORIAL DE COSTOS -->
+  <div id="nav-historial" style="display: none;">
+    <div class="content" style="padding-top:2rem;">
+
+      <!-- Tarjetas de Resumen -->
+      <div class="result-grid" style="margin-bottom: 1rem;">
+        <div class="metric">
+          <div class="metric-label">Cálculos guardados</div>
+          <div class="metric-val" id="hist-total-calc">0</div>
+        </div>
+        <div class="metric">
+          <div class="metric-label">Costo promedio lote</div>
+          <div class="metric-val" id="hist-prom-costo">Bs. 0.00</div>
+        </div>
+        <div class="metric">
+          <div class="metric-label">Precio sugerido prom.</div>
+          <div class="metric-val highlight" id="hist-prom-precio">Bs. 0.00</div>
+        </div>
+        <div class="metric"
+          style="display: flex; flex-direction: column; justify-content: center; align-items: center;">
+          <div class="metric-label">Costo Máx / Mín</div>
+          <div class="metric-val" id="hist-max-min"
+            style="font-size: 11px; font-weight: 500; line-height: 1.3; margin-top: 4px;">- / -</div>
+        </div>
+      </div>
+
+      <!-- Comparación de Variación de Costos -->
+      <div class="card" id="hist-analisis-card" style="display: none;">
+        <div class="card-header">
+          <div class="card-icon" style="background: var(--brand-light); color: var(--brand);"><i
+              class="ti ti-trending-up"></i></div>
+          <div>
+            <div class="card-title">Análisis de variación de costo</div>
+            <div class="card-sub">Comparación con el cálculo anterior del mismo producto</div>
+          </div>
+        </div>
+        <div id="analisis-content">
+          <!-- Dinámico -->
+        </div>
+      </div>
+
+      <!-- Gráfico Histórico -->
+      <div class="card">
+        <div class="card-header">
+          <div class="card-icon"><i class="ti ti-chart-line"></i></div>
+          <div>
+            <div class="card-title">Evolución de costos</div>
+            <div class="card-sub">Histórico del costo total de lote registrado</div>
+          </div>
+        </div>
+        <div class="chart-container">
+          <canvas id="canvas-historial"></canvas>
+        </div>
+      </div>
+
+      <!-- Tabla y Acciones -->
+      <div class="card">
+        <div
+          style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; flex-wrap: wrap; gap: 10px;">
+          <div class="tabs" style="margin: 0;">
+            <button class="tab active" id="btn-filtro-todos" onclick="filtrarHistorial('todos')">Ver todos</button>
+            <button class="tab" id="btn-filtro-ultimo" onclick="filtrarHistorial('ultimo')">Ver último producto</button>
+          </div>
+          <div style="display: flex; gap: 8px;">
+            <!-- INICIO NUEVO: HISTORIAL Y EXPORTACIÓN EXCEL -->
+            <button class="btn-secondary" onclick="exportarExcel()">
+              <i class="ti ti-file-spreadsheet"></i> Exportar a Excel
+            </button>
+            <!-- FIN NUEVO: HISTORIAL Y EXPORTACIÓN EXCEL -->
+            <button class="btn-secondary text-danger" onclick="borrarHistorial()"
+              style="border-color: rgba(220,38,38,0.2);">
+              <i class="ti ti-trash"></i> Borrar historial
+            </button>
+          </div>
+        </div>
+
+        <div id="historial-feedback" class="feedback-msg" style="display: none;"></div>
+
+        <div style="overflow-x: auto; -webkit-overflow-scrolling: touch;">
+          <table class="historial-table">
+            <thead>
+              <tr>
+                <th>Fecha</th>
+                <th>Producto</th>
+                <th>Costo Total</th>
+                <th>Precio Sugerido</th>
+                <th>Margen</th>
+                <th>IVA</th>
+                <th>Precio / Unidad</th>
+              </tr>
+            </thead>
+            <tbody id="historial-tbody">
+              <!-- Dinámico -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </div>
+  </div>
+  <!-- FIN NUEVO: HISTORIAL DE COSTOS -->
+
+</body>
+
+</html>
