@@ -2,7 +2,6 @@
 <html lang="es">
 
 <head>
-  <!-- Google Analytics -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-GQ1BRYK17S"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
@@ -15,7 +14,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Costify — Calculadora de Precios para Emprendedores Bolivia</title>
 
-  <!-- SEO Básico -->
   <meta name="description"
     content="Calcula el precio de venta de tu producto con IVA boliviano (13%) incluido. Gratis para emprendedores. Ingresa tus costos y obtén el precio justo al instante." />
   <meta name="keywords"
@@ -24,7 +22,6 @@
   <meta name="robots" content="index, follow" />
   <link rel="canonical" href="https://jose55urdi.github.io/Precio-Smart/" />
 
-  <!-- Open Graph -->
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://jose55urdi.github.io/Precio-Smart/" />
   <meta property="og:title" content="Costify — Calculadora de Precios para Emprendedores Bolivia" />
@@ -32,7 +29,6 @@
     content="¿Cuánto cobrar por tu producto? Calcula el precio de venta ideal con IVA boliviano incluido. Gratis para emprendedores." />
   <meta property="og:locale" content="es_BO" />
 
-  <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="Costify — Calculadora de Precios para Emprendedores Bolivia" />
   <meta name="twitter:description"
@@ -42,7 +38,6 @@
     href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=DM+Serif+Display&display=swap"
     rel="stylesheet" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.44.0/tabler-icons.min.css" />
-  <!-- Librería SheetJS para exportación Excel (.xlsx) con fórmulas -->
   <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
   <style>
     *,
@@ -303,7 +298,8 @@
 
     input[type="text"],
     input[type="number"],
-    input[type="email"] {
+    input[type="email"],
+    input[type="date"] {
       width: 100%;
       height: 38px;
       padding: 0 12px;
@@ -344,31 +340,6 @@
       transform: translateY(-50%);
       font-size: 14px;
       color: var(--text3);
-    }
-
-    .iva-row {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 10px 14px;
-      background: var(--bg2);
-      border-radius: var(--radius);
-      margin-top: 12px;
-      border: 0.5px solid var(--border);
-    }
-
-    .iva-label {
-      font-size: 13px;
-      color: var(--text2);
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
-
-    .iva-val {
-      font-size: 13px;
-      font-weight: 500;
-      color: var(--brand);
     }
 
     .iva-toggle {
@@ -811,7 +782,6 @@
       background: var(--bg2);
     }
 
-
     /* SOPORTE CHAT */
     #nav-soporte {
       display: none;
@@ -954,16 +924,8 @@
     }
 
     @keyframes bounce {
-
-      0%,
-      60%,
-      100% {
-        transform: translateY(0)
-      }
-
-      30% {
-        transform: translateY(-6px)
-      }
+      0%, 60%, 100% { transform: translateY(0) }
+      30% { transform: translateY(-6px) }
     }
 
     .chat-input-wrap {
@@ -1072,7 +1034,7 @@
       color: var(--text3);
     }
 
-    /* INICIO NUEVO: ESTILOS PERFIL E HISTORIAL */
+    /* ESTILOS PERFIL E HISTORIAL */
     .custom-select,
     .custom-textarea {
       width: 100%;
@@ -1194,9 +1156,7 @@
       margin-top: 1rem;
     }
 
-    /* FIN NUEVO: ESTILOS PERFIL E HISTORIAL */
-
-    /* INICIO NUEVO: ESTILOS DE BIENVENIDA */
+    /* ESTILOS DE BIENVENIDA Y MODALES */
     :root {
       --neon-green: #F0997B;
       --bright-green: #5FD46D;
@@ -1208,112 +1168,6 @@
       --dark-border: rgba(255, 255, 255, 0.08);
       --text-white: #FFFFFF;
       --text-gray: #A0A0A5;
-    }
-
-    #nav-bienvenida {
-      background: var(--dark-bg);
-      color: var(--text-white);
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      padding: 2rem 1.5rem;
-      font-family: 'DM Sans', sans-serif;
-      position: relative;
-      overflow: hidden;
-    }
-
-    #nav-bienvenida::before {
-      content: '';
-      position: absolute;
-      top: -150px;
-      right: -150px;
-      width: 400px;
-      height: 400px;
-      border-radius: 50%;
-      background: radial-gradient(circle, rgba(55, 138, 221, 0.15) 0%, transparent 70%);
-      filter: blur(50px);
-      pointer-events: none;
-    }
-
-    #nav-bienvenida::after {
-      content: '';
-      position: absolute;
-      bottom: -150px;
-      left: -150px;
-      width: 400px;
-      height: 400px;
-      border-radius: 50%;
-      background: radial-gradient(circle, rgba(216, 90, 48, 0.12) 0%, transparent 70%);
-      filter: blur(50px);
-      pointer-events: none;
-    }
-
-    .welcome-card {
-      max-width: 600px;
-      width: 100%;
-      background: rgba(42, 42, 48, 0.6);
-      backdrop-filter: blur(20px);
-      border: 1px solid var(--dark-border);
-      border-radius: var(--radius-lg);
-      padding: 3rem 2.5rem;
-      text-align: center;
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
-      z-index: 10;
-      position: relative;
-    }
-
-    .brand-container {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      margin-bottom: 2rem;
-    }
-
-    .logo-wrapper {
-      margin-bottom: 1.5rem;
-      transition: transform 0.3s ease;
-    }
-
-    .logo-wrapper:hover {
-      transform: scale(1.05);
-    }
-
-    .brand-title {
-      font-family: 'DM Serif Display', serif;
-      font-size: 38px;
-      font-weight: 400;
-      background: linear-gradient(135deg, var(--neon-green) 0%, var(--turquoise) 50%, var(--bright-blue) 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      margin-bottom: 0.5rem;
-      letter-spacing: -0.02em;
-    }
-
-    .brand-headline {
-      font-size: 20px;
-      font-weight: 500;
-      color: var(--text-white);
-      margin-bottom: 1rem;
-      line-height: 1.3;
-    }
-
-    .brand-subheadline {
-      font-size: 14px;
-      color: var(--text-gray);
-      line-height: 1.6;
-      margin-bottom: 2.5rem;
-      max-width: 480px;
-      margin-left: auto;
-      margin-right: auto;
-    }
-
-    .welcome-actions {
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-      width: 100%;
     }
 
     .btn-brand-primary {
@@ -1341,51 +1195,7 @@
       background: linear-gradient(135deg, var(--neon-green) 0%, var(--turquoise) 100%);
     }
 
-    .btn-brand-primary:active {
-      transform: translateY(0);
-    }
-
-    .btn-brand-outline {
-      width: 100%;
-      height: 48px;
-      background: transparent;
-      color: var(--text-white);
-      border: 1px solid var(--dark-border);
-      border-radius: var(--radius);
-      font-family: 'DM Sans', sans-serif;
-      font-size: 14px;
-      font-weight: 500;
-      cursor: pointer;
-      transition: all 0.2s;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-    }
-
-    .btn-brand-outline:hover {
-      background: rgba(255, 255, 255, 0.05);
-      border-color: var(--turquoise);
-      color: var(--turquoise);
-    }
-
-    .btn-brand-link {
-      background: none;
-      border: none;
-      color: var(--text-gray);
-      font-family: 'DM Sans', sans-serif;
-      font-size: 13px;
-      cursor: pointer;
-      margin-top: 1rem;
-      transition: color 0.15s;
-      text-decoration: underline;
-    }
-
-    .btn-brand-link:hover {
-      color: var(--neon-green);
-    }
-
-    /* Modal styles for login */
+    /* Modal styles for privacy */
     .modal-overlay {
       position: fixed;
       inset: 0;
@@ -1437,37 +1247,6 @@
     .login-header p {
       font-size: 13px;
       color: var(--text-gray);
-    }
-
-    .dark-field {
-      margin-bottom: 1.25rem;
-    }
-
-    .dark-field label {
-      display: block;
-      font-size: 12px;
-      color: var(--text-gray);
-      margin-bottom: 6px;
-      font-weight: 500;
-    }
-
-    .dark-field input {
-      width: 100%;
-      height: 40px;
-      padding: 0 12px;
-      background: rgba(0, 0, 0, 0.2);
-      border: 1px solid var(--dark-border);
-      border-radius: var(--radius);
-      color: var(--text-white);
-      font-family: 'DM Sans', sans-serif;
-      font-size: 14px;
-      outline: none;
-      transition: border-color 0.15s, box-shadow 0.15s;
-    }
-
-    .dark-field input:focus {
-      border-color: var(--turquoise);
-      box-shadow: 0 0 0 3px rgba(55, 138, 221, 0.15);
     }
 
     /* Toast container and toasts styling */
@@ -1548,39 +1327,15 @@
       color: var(--bright-blue);
     }
 
-    /* Header User Indicator */
-    .nav-user-indicator {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      font-size: 13px;
-      color: var(--text2);
-    }
-
-    .nav-user-indicator i {
-      color: var(--brand);
-    }
-
-    .nav-user-indicator .user-badge {
-      background: var(--brand-light);
-      color: var(--brand-text);
-      font-weight: 500;
-      padding: 2px 8px;
-      border-radius: 12px;
-    }
-
     .logo-icon-svg {
       width: 26px;
       height: 26px;
     }
-
-    /* FIN NUEVO: ESTILOS DE BIENVENIDA */
   </style>
 </head>
 
 <body>
 
-  <!-- Contenedor global de Toasts -->
   <div class="toast-container" id="toast-container"></div>
 
   <nav>
@@ -1598,64 +1353,59 @@
   <div id="nav-calc">
     <div class="hero">
       <h1>Calcula el precio justo de tu producto</h1>
-      <p>Ingresa tus costos y el margen que deseas ganar. Costify calcula el IVA boliviano (13%) y te da el precio
-        de venta ideal.</p>
+      <p>Ingresa tus costos y el margen que deseas ganar. Costify calcula el IVA boliviano (13%) y te da el precio de venta ideal.</p>
       <div class="tabs">
         <button class="tab active" onclick="showTab(this,'basico')">Básico — Gratis</button>
         <button class="tab" onclick="showTab(this,'pro')">Pro — Avanzado</button>
       </div>
     </div>
 
-<!-- INICIO ASISTENTE IA DE COSTOS (REAL) -->
-<div id="ia-costos-screen" style="max-width:760px;margin:2rem auto;padding:0 1rem;">
-  <div class="chat-card">
-    <div class="chat-header">
-      <div class="chat-avatar"><i class="ti ti-robot"></i></div>
-      <div class="chat-header-info">
-        <h3>CostifAI</h3>
-        <p>Te ayudo a completar tu cálculo conversando, paso a paso.</p>
-      </div>
-      <div class="chat-status"></div>
-    </div>
+    <div id="ia-costos-screen" style="max-width:760px;margin:2rem auto;padding:0 1rem;">
+      <div class="chat-card">
+        <div class="chat-header">
+          <div class="chat-avatar"><i class="ti ti-robot"></i></div>
+          <div class="chat-header-info">
+            <h3>CostifAI</h3>
+            <p>Te ayudo a completar tu cálculo conversando, paso a paso.</p>
+          </div>
+          <div class="chat-status"></div>
+        </div>
 
-    <div class="chat-messages" id="ia-chat-messages">
-      <div class="msg bot">
-        <div class="msg-bubble">
-          ¡Hola! Soy <strong>CostifAI</strong> 🤖 Te voy a ayudar a calcular los costos de tu primer producto, simplemente conversando conmigo.<br><br>
-          Si prefieres, también puedes hacerlo tú mismo dándole al botón <strong>"Prefiero calcular mis costos manualmente"</strong> más abajo.<br><br>
-          Para empezar, ¿cómo se llama tu producto?
+        <div class="chat-messages" id="ia-chat-messages">
+          <div class="msg bot">
+            <div class="msg-bubble">
+              ¡Hola! Soy <strong>CostifAI</strong> 🤖 Te voy a ayudar a calcular los costos de tu primer producto, simplemente conversando conmigo.<br><br>
+              Si prefieres, también puedes hacerlo tú mismo dándole al botón <strong>"Prefiero calcular mis costos manualmente"</strong> más abajo.<br><br>
+              Para empezar, ¿cómo se llama tu producto?
+            </div>
+          </div>
+          <div class="typing" id="ia-typing">
+            <div class="typing-bubble">
+              <div class="typing-dot"></div>
+              <div class="typing-dot"></div>
+              <div class="typing-dot"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="chat-input-wrap">
+          <input class="chat-input" id="ia-chat-input" placeholder="Escribe tu respuesta..."
+            onkeydown="if(event.key==='Enter') enviarMensajeIA()" />
+          <button class="chat-send" id="ia-chat-send-btn" onclick="enviarMensajeIA()"><i class="ti ti-send"></i></button>
+        </div>
+
+        <div style="padding:1rem;">
+          <button class="btn-secondary" onclick="mostrarFormularioManual()" style="width:100%;">
+            Prefiero calcular mis costos manualmente
+          </button>
         </div>
       </div>
-      <div class="typing" id="ia-typing">
-        <div class="typing-bubble">
-          <div class="typing-dot"></div>
-          <div class="typing-dot"></div>
-          <div class="typing-dot"></div>
-        </div>
-      </div>
     </div>
 
-    <div class="chat-input-wrap">
-      <input class="chat-input" id="ia-chat-input" placeholder="Escribe tu respuesta..."
-        onkeydown="if(event.key==='Enter') enviarMensajeIA()" />
-      <button class="chat-send" id="ia-chat-send-btn" onclick="enviarMensajeIA()"><i class="ti ti-send"></i></button>
-    </div>
-
-    <div style="padding:1rem;">
-      <button class="btn-secondary" onclick="mostrarFormularioManual()" style="width:100%;">
-        Prefiero calcular mis costos manualmente
-      </button>
-    </div>
-  </div>
-</div>
-
-<script>
-// Endpoint del worker (mismo que usa el chat de Soporte con IA)
-// URL de tu Worker de Cloudflare que ahora conecta con Gemini (ver worker-gemini.js)
-const COSTIFY_IA_ENDPOINT = 'https://costify-ia.jose-aleurdi3.workers.dev/';
-
-const SYSTEM_PROMPT_IA_COSTOS = `Eres CostifAI, el asistente conversacional de Costify. Ayudas a emprendedores bolivianos a completar, de forma natural y amigable, el formulario de costos de su producto, conversando en español.
-
+    <script>
+      const COSTIFY_IA_ENDPOINT = 'https://costify-ia.jose-aleurdi3.workers.dev/';
+      const SYSTEM_PROMPT_IA_COSTOS = `Eres CostifAI, el asistente conversacional de Costify.
+Ayudas a emprendedores bolivianos a completar, de forma natural y amigable, el formulario de costos de su producto, conversando en español.
 Debes ir preguntando por estos campos (adapta el orden si el usuario da varios datos juntos o se salta alguno):
 1. prod-name (texto): nombre del producto
 2. c-materia (número, en Bs): costo de materia prima
@@ -1666,8 +1416,8 @@ Debes ir preguntando por estos campos (adapta el orden si el usuario da varios d
 7. c-admin (número, en Bs): gastos administrativos
 8. units (entero, mínimo 1): unidades que produce por lote
 9. margen (número, %): margen de ganancia deseado
-10. aplicar-iva (booleano): si se debe aplicar el IVA boliviano del 13%. Asume true salvo que el usuario diga que es comerciante informal o pida no aplicarlo.
-
+10. aplicar-iva (booleano): si se debe aplicar el IVA boliviano del 13%.
+Asume true salvo que el usuario diga que es comerciante informal o pida no aplicarlo.
 Reglas:
 - Si el usuario dice que un costo no aplica o es cero, regístralo como 0 (no lo dejes pendiente).
 - Si la respuesta es ambigua donde se espera un número, pide amablemente que aclare y no incluyas ese campo todavía.
@@ -1678,145 +1428,136 @@ Reglas:
 - En "campos" incluye SOLO los campos que puedas confirmar con la información dada hasta ahora (no inventes valores).
 - "mensaje" debe ser corto (1-3 oraciones).`;
 
-let iaChatHistory = [];
+      let iaChatHistory = [];
+      let iaEnviando = false;
 
-let iaEnviando = false;
+      async function enviarMensajeIA() {
+        if (iaEnviando) return;
+        const input = document.getElementById('ia-chat-input');
+        const texto = input.value.trim();
+        if (!texto) return;
+        iaEnviando = true;
+        const btn = document.getElementById('ia-chat-send-btn');
+        btn.disabled = true;
+        btn.style.opacity = '0.5';
+        input.value = '';
 
-async function enviarMensajeIA() {
-  if (iaEnviando) return;
-  const input = document.getElementById('ia-chat-input');
-  const texto = input.value.trim();
-  if (!texto) return;
+        agregarBurbujaIA(texto, 'user');
+        iaChatHistory.push({ role: 'user', content: texto });
 
-  iaEnviando = true;
-  const btn = document.getElementById('ia-chat-send-btn');
-  btn.disabled = true;
-  btn.style.opacity = '0.5';
-  input.value = '';
+        const typing = document.getElementById('ia-typing');
+        typing.classList.add('visible');
+        const messages = document.getElementById('ia-chat-messages');
+        messages.scrollTop = messages.scrollHeight;
+        try {
+          const res = await fetch(COSTIFY_IA_ENDPOINT, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              max_tokens: 500,
+              system: SYSTEM_PROMPT_IA_COSTOS,
+              messages: iaChatHistory
+            })
+          });
+          const bodyTexto = await res.text();
 
-  agregarBurbujaIA(texto, 'user');
-  iaChatHistory.push({ role: 'user', content: texto });
+          if (!res.ok) {
+            typing.classList.remove('visible');
+            agregarBurbujaIA(
+              '⚠️ DIAGNÓSTICO — Status: ' + res.status + ' ' + res.statusText +
+              '<br>Respuesta del servidor: <code>' + bodyTexto.substring(0, 500) + '</code>',
+              'bot'
+            );
+            return;
+          }
 
-  const typing = document.getElementById('ia-typing');
-  typing.classList.add('visible');
-  const messages = document.getElementById('ia-chat-messages');
-  messages.scrollTop = messages.scrollHeight;
+          let data;
+          try {
+            data = JSON.parse(bodyTexto);
+          } catch (e2) {
+            typing.classList.remove('visible');
+            agregarBurbujaIA('⚠️ DIAGNÓSTICO — El servidor respondió OK pero no es JSON válido: <code>' + bodyTexto.substring(0, 500) + '</code>', 'bot');
+            return;
+          }
 
-  try {
-    const res = await fetch(COSTIFY_IA_ENDPOINT, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        max_tokens: 500,
-        system: SYSTEM_PROMPT_IA_COSTOS,
-        messages: iaChatHistory
-      })
-    });
+          if (!data.content || !data.content[0] || !data.content[0].text) {
+            typing.classList.remove('visible');
+            agregarBurbujaIA('⚠️ DIAGNÓSTICO — Estructura inesperada de respuesta: <code>' + JSON.stringify(data).substring(0, 500) + '</code>', 'bot');
+            return;
+          }
 
-    const bodyTexto = await res.text();
+          const rawText = data.content[0].text;
+          const limpio = rawText.replace(/```json|```/g, '').trim();
 
-    // MODO DIAGNÓSTICO: si la petición HTTP falló, mostramos el status y el cuerpo crudo
-    if (!res.ok) {
-      typing.classList.remove('visible');
-      agregarBurbujaIA(
-        '⚠️ DIAGNÓSTICO — Status: ' + res.status + ' ' + res.statusText +
-        '<br>Respuesta del servidor: <code>' + bodyTexto.substring(0, 500) + '</code>',
-        'bot'
-      );
-      return;
-    }
+          let obj;
+          try {
+            obj = JSON.parse(limpio);
+          } catch (parseErr) {
+            typing.classList.remove('visible');
+            agregarBurbujaIA('⚠️ DIAGNÓSTICO — La IA no devolvió JSON válido: <code>' + rawText.substring(0, 500) + '</code>', 'bot');
+            return;
+          }
 
-    let data;
-    try {
-      data = JSON.parse(bodyTexto);
-    } catch (e2) {
-      typing.classList.remove('visible');
-      agregarBurbujaIA('⚠️ DIAGNÓSTICO — El servidor respondió OK pero no es JSON válido: <code>' + bodyTexto.substring(0, 500) + '</code>', 'bot');
-      return;
-    }
+          iaChatHistory.push({ role: 'assistant', content: rawText });
 
-    if (!data.content || !data.content[0] || !data.content[0].text) {
-      typing.classList.remove('visible');
-      agregarBurbujaIA('⚠️ DIAGNÓSTICO — Estructura inesperada de respuesta: <code>' + JSON.stringify(data).substring(0, 500) + '</code>', 'bot');
-      return;
-    }
+          typing.classList.remove('visible');
+          agregarBurbujaIA(obj.mensaje, 'bot');
 
-    const rawText = data.content[0].text;
-    const limpio = rawText.replace(/```json|```/g, '').trim();
+          if (obj.campos) aplicarCamposIA(obj.campos);
+          if (obj.completo === true) {
+            setTimeout(mostrarFormularioManual, 1200);
+          }
+        } catch (e) {
+          typing.classList.remove('visible');
+          agregarBurbujaIA('⚠️ DIAGNÓSTICO — Error de red/JavaScript: <code>' + (e.message || e) + '</code>', 'bot');
+        } finally {
+          setTimeout(() => {
+            iaEnviando = false;
+            btn.disabled = false;
+            btn.style.opacity = '1';
+          }, 2000);
+        }
+      }
 
-    let obj;
-    try {
-      obj = JSON.parse(limpio);
-    } catch (parseErr) {
-      typing.classList.remove('visible');
-      agregarBurbujaIA('⚠️ DIAGNÓSTICO — La IA no devolvió JSON válido: <code>' + rawText.substring(0, 500) + '</code>', 'bot');
-      return;
-    }
+      function agregarBurbujaIA(texto, role) {
+        const messages = document.getElementById('ia-chat-messages');
+        const typing = document.getElementById('ia-typing');
+        const div = document.createElement('div');
+        div.className = 'msg ' + role;
+        div.innerHTML = '<div class="msg-bubble">' + texto + '</div>';
+        messages.insertBefore(div, typing);
+        messages.scrollTop = messages.scrollHeight;
+      }
 
-    iaChatHistory.push({ role: 'assistant', content: rawText });
+      function aplicarCamposIA(campos) {
+        const numericos = ['c-materia', 'c-transporte', 'c-mano', 'c-embalaje', 'c-electro', 'c-admin', 'margen'];
+        Object.keys(campos).forEach(id => {
+          const valor = campos[id];
+          if (id === 'prod-name') {
+            document.getElementById('prod-name').value = valor;
+          } else if (id === 'units') {
+            document.getElementById('units').value = Math.max(1, parseInt(valor) || 1);
+          } else if (id === 'aplicar-iva') {
+            document.getElementById('aplicar-iva').checked = !!valor;
+          } else if (numericos.includes(id)) {
+            const el = document.getElementById(id);
+            if (el) el.value = parseFloat(valor) || 0;
+          }
+        });
+        calcAuto();
+      }
 
-    typing.classList.remove('visible');
-    agregarBurbujaIA(obj.mensaje, 'bot');
+      function mostrarFormularioManual() {
+        document.getElementById('ia-costos-screen').style.display = 'none';
+        document.getElementById('tab-basico').style.display = 'block';
+      }
 
-    if (obj.campos) aplicarCamposIA(obj.campos);
+      document.addEventListener('DOMContentLoaded', () => {
+        document.getElementById('tab-basico').style.display = 'none';
+      });
+    </script>
 
-    if (obj.completo === true) {
-      setTimeout(mostrarFormularioManual, 1200);
-    }
-  } catch (e) {
-    typing.classList.remove('visible');
-    agregarBurbujaIA('⚠️ DIAGNÓSTICO — Error de red/JavaScript: <code>' + (e.message || e) + '</code>', 'bot');
-  } finally {
-    setTimeout(() => {
-      iaEnviando = false;
-      btn.disabled = false;
-      btn.style.opacity = '1';
-    }, 2000);
-  }
-}
-
-function agregarBurbujaIA(texto, role) {
-  const messages = document.getElementById('ia-chat-messages');
-  const typing = document.getElementById('ia-typing');
-  const div = document.createElement('div');
-  div.className = 'msg ' + role;
-  div.innerHTML = '<div class="msg-bubble">' + texto + '</div>';
-  messages.insertBefore(div, typing);
-  messages.scrollTop = messages.scrollHeight;
-}
-
-function aplicarCamposIA(campos) {
-  const numericos = ['c-materia', 'c-transporte', 'c-mano', 'c-embalaje', 'c-electro', 'c-admin', 'margen'];
-
-  Object.keys(campos).forEach(id => {
-    const valor = campos[id];
-    if (id === 'prod-name') {
-      document.getElementById('prod-name').value = valor;
-    } else if (id === 'units') {
-      document.getElementById('units').value = Math.max(1, parseInt(valor) || 1);
-    } else if (id === 'aplicar-iva') {
-      document.getElementById('aplicar-iva').checked = !!valor;
-    } else if (numericos.includes(id)) {
-      const el = document.getElementById(id);
-      if (el) el.value = parseFloat(valor) || 0;
-    }
-  });
-
-  calcAuto();
-}
-
-function mostrarFormularioManual() {
-  document.getElementById('ia-costos-screen').style.display = 'none';
-  document.getElementById('tab-basico').style.display = 'block';
-}
-
-document.addEventListener('DOMContentLoaded', () => {
-  document.getElementById('tab-basico').style.display = 'none';
-});
-</script>
-<!-- FIN ASISTENTE IA DE COSTOS (REAL) -->
-
-<div class="content">
+    <div class="content">
       <div id="tab-basico" class="page visible">
 
         <div class="card">
@@ -1918,8 +1659,7 @@ document.addEventListener('DOMContentLoaded', () => {
               <label>Margen de ganancia (%)</label>
               <div class="prefix-wrap">
                 <span class="prefix">%</span>
-                <input type="number" id="margen" placeholder="30" min="0" max="500" step="1" value="30"
-                  oninput="calcAuto()" />
+                <input type="number" id="margen" placeholder="30" min="0" max="500" step="1" value="30" oninput="calcAuto()" />
               </div>
             </div>
           </div>
@@ -1953,41 +1693,28 @@ document.addEventListener('DOMContentLoaded', () => {
             </div>
             <div class="breakdown">
               <div class="breakdown-title">Desglose completo</div>
-              <div class="br-row"><span class="br-label">Materia prima</span><span class="br-val" id="br-materia">Bs.
-                  0.00</span></div>
-              <div class="br-row"><span class="br-label">Transporte</span><span class="br-val" id="br-transporte">Bs.
-                  0.00</span></div>
-              <div class="br-row"><span class="br-label">Mano de obra</span><span class="br-val" id="br-mano">Bs.
-                  0.00</span></div>
-              <div class="br-row"><span class="br-label">Embalaje</span><span class="br-val" id="br-embalaje">Bs.
-                  0.00</span></div>
-              <div class="br-row"><span class="br-label">Electricidad</span><span class="br-val" id="br-electro">Bs.
-                  0.00</span></div>
-              <div class="br-row"><span class="br-label">Gastos admin.</span><span class="br-val" id="br-admin">Bs.
-                  0.00</span></div>
-              <div class="br-row"><span class="br-label">Subtotal costos</span><span class="br-val" id="br-sub">Bs.
-                  0.00</span></div>
-              <div class="br-row"><span class="br-label">IVA (13%)</span><span class="br-val" id="br-iva">Bs.
-                  0.00</span></div>
-              <div class="br-row"><span class="br-label">Ganancia (<span id="br-pct">30</span>%)</span><span
-                  class="br-val" id="br-ganancia">Bs. 0.00</span></div>
-              <div class="br-row total"><span class="br-label">Precio sugerido de venta</span><span class="br-val"
-                  id="br-total">Bs. 0.00</span></div>
+              <div class="br-row"><span class="br-label">Materia prima</span><span class="br-val" id="br-materia">Bs. 0.00</span></div>
+              <div class="br-row"><span class="br-label">Transporte</span><span class="br-val" id="br-transporte">Bs. 0.00</span></div>
+              <div class="br-row"><span class="br-label">Mano de obra</span><span class="br-val" id="br-mano">Bs. 0.00</span></div>
+              <div class="br-row"><span class="br-label">Embalaje</span><span class="br-val" id="br-embalaje">Bs. 0.00</span></div>
+              <div class="br-row"><span class="br-label">Electricidad</span><span class="br-val" id="br-electro">Bs. 0.00</span></div>
+              <div class="br-row"><span class="br-label">Gastos admin.</span><span class="br-val" id="br-admin">Bs. 0.00</span></div>
+              <div class="br-row"><span class="br-label">Subtotal costos</span><span class="br-val" id="br-sub">Bs. 0.00</span></div>
+              <div class="br-row"><span class="br-label">IVA (13%)</span><span class="br-val" id="br-iva">Bs. 0.00</span></div>
+              <div class="br-row"><span class="br-label">Ganancia (<span id="br-pct">30</span>%)</span><span class="br-val" id="br-ganancia">Bs. 0.00</span></div>
+              <div class="br-row total"><span class="br-label">Precio sugerido de venta</span><span class="br-val" id="br-total">Bs. 0.00</span></div>
             </div>
-            <!-- INICIO NUEVO: HISTORIAL DE COSTOS -->
-            <button class="btn-secondary" id="btn-guardar-calculo" onclick="guardarCalculo()"
-              style="margin-top: 1rem; width: 100%;">
+
+            <button class="btn-secondary" id="btn-guardar-calculo" onclick="guardarCalculo()" style="margin-top: 1rem; width: 100%;">
               <i class="ti ti-device-floppy"></i> Guardar cálculo en historial
             </button>
             <div id="guardar-mensaje" class="feedback-msg" style="display: none; margin-top: 0.5rem;"></div>
-            <!-- FIN NUEVO: HISTORIAL DE COSTOS -->
           </div>
         </div>
 
         <div class="pro-banner">
           <h3>⭐ Desbloquea Costify Pro</h3>
-          <p>Accede a costos adicionales personalizados, comparador de productos,<br>exportación a PDF y más
-            herramientas para tu emprendimiento.</p>
+          <p>Accede a costos adicionales personalizados, comparador de productos,<br>exportación a PDF y más herramientas para tu emprendimiento.</p>
           <div class="pro-features">
             <span class="feat-pill">+ Costos personalizados</span>
             <span class="feat-pill">↑ Exportar a PDF</span>
@@ -2002,8 +1729,7 @@ document.addEventListener('DOMContentLoaded', () => {
       <div id="tab-pro" class="page">
         <div class="card">
           <div class="card-header">
-            <div class="card-icon" style="background:#fef3c7;color:#92400e;"><i class="ti ti-lock"
-                aria-hidden="true"></i></div>
+            <div class="card-icon" style="background:#fef3c7;color:#92400e;"><i class="ti ti-lock" aria-hidden="true"></i></div>
             <div>
               <div class="card-title">Costos avanzados</div>
               <div class="card-sub">Disponible con suscripción Pro</div>
@@ -2013,37 +1739,31 @@ document.addEventListener('DOMContentLoaded', () => {
           <div class="row">
             <div class="field pro-field">
               <label>Depreciación de equipo</label>
-              <div class="prefix-wrap"><span class="prefix">Bs.</span><input type="number" placeholder="0.00"
-                  disabled /><span class="lock-icon"><i class="ti ti-lock"></i></span></div>
+              <div class="prefix-wrap"><span class="prefix">Bs.</span><input type="number" placeholder="0.00" disabled /><span class="lock-icon"><i class="ti ti-lock"></i></span></div>
             </div>
             <div class="field pro-field">
               <label>Alquiler del espacio</label>
-              <div class="prefix-wrap"><span class="prefix">Bs.</span><input type="number" placeholder="0.00"
-                  disabled /><span class="lock-icon"><i class="ti ti-lock"></i></span></div>
+              <div class="prefix-wrap"><span class="prefix">Bs.</span><input type="number" placeholder="0.00" disabled /><span class="lock-icon"><i class="ti ti-lock"></i></span></div>
             </div>
           </div>
           <div class="row">
             <div class="field pro-field">
               <label>Marketing / Publicidad</label>
-              <div class="prefix-wrap"><span class="prefix">Bs.</span><input type="number" placeholder="0.00"
-                  disabled /><span class="lock-icon"><i class="ti ti-lock"></i></span></div>
+              <div class="prefix-wrap"><span class="prefix">Bs.</span><input type="number" placeholder="0.00" disabled /><span class="lock-icon"><i class="ti ti-lock"></i></span></div>
             </div>
             <div class="field pro-field">
               <label>Costo financiero / interés</label>
-              <div class="prefix-wrap"><span class="prefix">Bs.</span><input type="number" placeholder="0.00"
-                  disabled /><span class="lock-icon"><i class="ti ti-lock"></i></span></div>
+              <div class="prefix-wrap"><span class="prefix">Bs.</span><input type="number" placeholder="0.00" disabled /><span class="lock-icon"><i class="ti ti-lock"></i></span></div>
             </div>
           </div>
           <div class="row">
             <div class="field pro-field">
               <label>Costo personalizado 1</label>
-              <div class="prefix-wrap"><span class="prefix">Bs.</span><input type="number" placeholder="0.00"
-                  disabled /><span class="lock-icon"><i class="ti ti-lock"></i></span></div>
+              <div class="prefix-wrap"><span class="prefix">Bs.</span><input type="number" placeholder="0.00" disabled /><span class="lock-icon"><i class="ti ti-lock"></i></span></div>
             </div>
             <div class="field pro-field">
               <label>Costo personalizado 2</label>
-              <div class="prefix-wrap"><span class="prefix">Bs.</span><input type="number" placeholder="0.00"
-                  disabled /><span class="lock-icon"><i class="ti ti-lock"></i></span></div>
+              <div class="prefix-wrap"><span class="prefix">Bs.</span><input type="number" placeholder="0.00" disabled /><span class="lock-icon"><i class="ti ti-lock"></i></span></div>
             </div>
           </div>
           <div style="text-align:center;padding:1rem 0 0;">
@@ -2059,8 +1779,7 @@ document.addEventListener('DOMContentLoaded', () => {
       <div class="lm-card">
         <div class="lm-icon"><i class="ti ti-mail" aria-hidden="true"></i></div>
         <h2>Aprende a fijar precios como un experto</h2>
-        <p class="lm-sub">Recibe gratis nuestra guía <strong>«Los 5 errores que cometen los emprendedores al poner
-            precios»</strong> y empieza a vender con más ganancia.</p>
+        <p class="lm-sub">Recibe gratis nuestra guía <strong>«Los 5 errores que cometen los emprendedores al poner precios»</strong> y empieza a vender con más ganancia.</p>
         <div class="lm-benefits">
           <div class="lm-benefit"><i class="ti ti-check" aria-hidden="true"></i> Guía PDF gratuita</div>
           <div class="lm-benefit"><i class="ti ti-check" aria-hidden="true"></i> Tips de pricing para tu negocio</div>
@@ -2084,13 +1803,11 @@ document.addEventListener('DOMContentLoaded', () => {
         </div>
         <div class="testimonials">
           <div class="testi">
-            <p class="testi-text">"Antes ponía precios a ojo. Con Costify descubrí que estaba perdiendo Bs. 8 por
-              producto."</p>
+            <p class="testi-text">"Antes ponía precios a ojo. Con Costify descubrí que estaba perdiendo Bs. 8 por producto."</p>
             <div class="testi-author">— Carla M., repostería, La Paz</div>
           </div>
           <div class="testi">
-            <p class="testi-text">"Super fácil de usar, en 5 minutos ya tenía el precio de mis velas calculado con IVA y
-              todo."</p>
+            <p class="testi-text">"Super fácil de usar, en 5 minutos ya tenía el precio de mis velas calculated con IVA y todo."</p>
             <div class="testi-author">— Diego R., artesanías, Cochabamba</div>
           </div>
         </div>
@@ -2101,24 +1818,22 @@ document.addEventListener('DOMContentLoaded', () => {
   <footer>© 2026 Costify · Hecho para emprendedores bolivianos</footer>
 
   <script>
-
     function toggleSidebar() {
       document.getElementById('sidebar').classList.toggle('open');
       document.getElementById('sidebar-overlay').classList.toggle('open');
     }
-
 
     function goSoporte() {
       document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
       document.getElementById('nav-calc').style.display = 'none';
       document.getElementById('nav-info').style.display = 'none';
       document.getElementById('nav-foro').style.display = 'none';
-      document.getElementById('nav-soporte').style.display = 'none';
+      document.getElementById('nav-historial').style.display = 'none';
+      document.getElementById('nav-perfil').style.display = 'none';
       document.getElementById('nav-soporte').style.display = 'block';
     }
 
     const chatHistory = [];
-
     function sendSuggestion(text) {
       document.getElementById('chat-input').value = text;
       sendMessage();
@@ -2151,7 +1866,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
       addMessage(text, 'user');
       chatHistory.push({ role: 'user', content: text });
-
       const typing = document.getElementById('typing');
       typing.classList.add('visible');
       document.getElementById('chat-messages').scrollTop = 999999;
@@ -2166,7 +1880,6 @@ document.addEventListener('DOMContentLoaded', () => {
             messages: chatHistory
           })
         });
-
         const bodyTexto = await res.text();
 
         if (!res.ok) {
@@ -2215,6 +1928,8 @@ document.addEventListener('DOMContentLoaded', () => {
       document.getElementById('nav-calc').style.display = 'none';
       document.getElementById('nav-info').style.display = 'none';
       document.getElementById('nav-soporte').style.display = 'none';
+      document.getElementById('nav-historial').style.display = 'none';
+      document.getElementById('nav-perfil').style.display = 'none';
       document.getElementById('nav-foro').style.display = 'block';
     }
 
@@ -2225,6 +1940,8 @@ document.addEventListener('DOMContentLoaded', () => {
       document.getElementById('nav-info').style.display = page === 'info' ? 'block' : 'none';
       document.getElementById('nav-foro').style.display = 'none';
       document.getElementById('nav-soporte').style.display = 'none';
+      document.getElementById('nav-historial').style.display = 'none';
+      document.getElementById('nav-perfil').style.display = 'none';
     }
 
     function goInfo() {
@@ -2232,6 +1949,10 @@ document.addEventListener('DOMContentLoaded', () => {
       document.querySelectorAll('.nav-btn')[1].classList.add('active');
       document.getElementById('nav-calc').style.display = 'none';
       document.getElementById('nav-info').style.display = 'block';
+      document.getElementById('nav-foro').style.display = 'none';
+      document.getElementById('nav-soporte').style.display = 'none';
+      document.getElementById('nav-historial').style.display = 'none';
+      document.getElementById('nav-perfil').style.display = 'none';
     }
 
     function showTab(btn, tab) {
@@ -2258,7 +1979,6 @@ document.addEventListener('DOMContentLoaded', () => {
       const units = Math.max(1, getVal('units'));
       const margen = getVal('margen');
       const aplicaIVA = document.getElementById('aplicar-iva').checked;
-
       const subtotal = materia + transporte + mano + embalaje + electro + admin;
       const iva = aplicaIVA ? subtotal * 0.13 : 0;
       const costoLote = subtotal + iva;
@@ -2286,8 +2006,6 @@ document.addEventListener('DOMContentLoaded', () => {
       document.getElementById('resultados').classList.add('visible');
     }
 
-    // INICIO NUEVO: FUNCIONES EXCEL Y PERFIL
-
     // Toast alert notification system
     function showToast(message, type = "success") {
       const container = document.getElementById('toast-container');
@@ -2299,19 +2017,16 @@ document.addEventListener('DOMContentLoaded', () => {
       let icon = "ti-circle-check";
       if (type === "error") icon = "ti-alert-circle";
       if (type === "info") icon = "ti-info-circle";
-
       toast.innerHTML = `
         <span class="toast-icon"><i class="ti ${icon}"></i></span>
         <span class="toast-message">${message}</span>
         <button class="toast-close" onclick="this.parentElement.remove()"><i class="ti ti-x"></i></button>
       `;
-
       container.appendChild(toast);
 
       setTimeout(() => {
         toast.classList.add('show');
       }, 10);
-
       setTimeout(() => {
         toast.classList.remove('show');
         setTimeout(() => {
@@ -2320,7 +2035,7 @@ document.addEventListener('DOMContentLoaded', () => {
       }, 4000);
     }
 
-    // Hide the cost-history and profile views whenever the user navigates elsewhere
+    // Navigation clean-up handlers
     document.addEventListener("DOMContentLoaded", () => {
       const originalShowNav = showNav;
       showNav = function (btn, page) {
@@ -2362,7 +2077,7 @@ document.addEventListener('DOMContentLoaded', () => {
       renderHistorial();
     }
 
-    // INICIO NUEVO: PERFIL
+    // PERFIL
     function goPerfil() {
       document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
       document.getElementById('nav-calc').style.display = 'none';
@@ -2404,7 +2119,6 @@ document.addEventListener('DOMContentLoaded', () => {
         cumple: document.getElementById('perfil-cumple').value,
         rubro: document.getElementById('perfil-rubro').value
       };
-
       if (!perfil.nombre) {
         showToast('Por favor ingresa tu nombre.', 'error');
         return;
@@ -2413,7 +2127,6 @@ document.addEventListener('DOMContentLoaded', () => {
       localStorage.setItem('costifyPerfilUsuario', JSON.stringify(perfil));
       showToast('Perfil guardado con éxito.', 'success');
     }
-    // FIN NUEVO: PERFIL
 
     // COST SAVE AND HISTORY
     function guardarCalculo() {
@@ -2427,7 +2140,6 @@ document.addEventListener('DOMContentLoaded', () => {
       const units = Math.max(1, parseFloat(document.getElementById('units').value) || 1);
       const margen = parseFloat(document.getElementById('margen').value) || 0;
       const aplicaIVA = document.getElementById('aplicar-iva').checked;
-
       const subtotal = materia + transporte + mano + embalaje + electro + admin;
       const iva = aplicaIVA ? subtotal * 0.13 : 0;
       const costoLote = subtotal + iva;
@@ -2447,7 +2159,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
       const now = new Date();
       const fechaStr = now.toLocaleDateString('es-BO') + ' ' + now.toLocaleTimeString('es-BO', { hour: '2-digit', minute: '2-digit' });
-
       const calculo = {
         fecha: fechaStr,
         timestamp: now.getTime(),
@@ -2469,7 +2180,6 @@ document.addEventListener('DOMContentLoaded', () => {
         total,
         ventaPorUnidad
       };
-
       let historial = [];
       const rawHistorial = localStorage.getItem('costifyHistorialCostos');
       if (rawHistorial) {
@@ -2482,13 +2192,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
       historial.push(calculo);
       localStorage.setItem('costifyHistorialCostos', JSON.stringify(historial));
-
       showToast("Cálculo guardado con éxito en el historial.", "success");
     }
 
-    // COST HISTORY VIEW MANAGEMENT
     let filtroActual = 'todos';
-
     function filtrarHistorial(filtro) {
       filtroActual = filtro;
       document.getElementById('btn-filtro-todos').classList.toggle('active', filtro === 'todos');
@@ -2534,7 +2241,6 @@ document.addEventListener('DOMContentLoaded', () => {
         if (h.costoLote > maxH.costoLote) maxH = h;
         if (h.costoLote < minH.costoLote) minH = h;
       });
-
       document.getElementById('hist-total-calc').textContent = count;
       document.getElementById('hist-prom-costo').textContent = fmt(avgCosto);
       document.getElementById('hist-prom-precio').textContent = fmt(avgPrecio);
@@ -2542,7 +2248,6 @@ document.addEventListener('DOMContentLoaded', () => {
       document.getElementById('hist-max-min').innerHTML =
         `Máx: ${maxH.nombre.substring(0, 8)} (${fmt(maxH.costoLote)})<br>` +
         `Mín: ${minH.nombre.substring(0, 8)} (${fmt(minH.costoLote)})`;
-
       realizarAnalisisCostos(historial);
     }
 
@@ -2576,7 +2281,6 @@ document.addEventListener('DOMContentLoaded', () => {
       const costoPrev = prevCalc.costoPorUnidad;
       const diff = costoUltimo - costoPrev;
       const pct = costoPrev > 0 ? (diff / costoPrev) * 100 : 0;
-
       let html = '';
       if (diff > 0) {
         html = `<p style="font-size: 13px; color: var(--text2); line-height: 1.6;">El costo unitario de <strong>${ultimoCalc.nombre}</strong> subió de <strong>${fmt(costoPrev)}</strong> a <strong>${fmt(costoUltimo)}</strong> (un incremento de <span class="text-danger" style="font-weight: 600;">+${pct.toFixed(2)}%</span>).</p>`;
@@ -2611,7 +2315,6 @@ document.addEventListener('DOMContentLoaded', () => {
       const height = rect.height;
 
       ctx.clearRect(0, 0, width, height);
-
       if (historial.length === 0) {
         ctx.font = '13px "DM Sans", sans-serif';
         ctx.fillStyle = '#888888';
@@ -2623,7 +2326,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
       const values = historial.map(h => h.costoLote);
       const labels = historial.map(h => h.nombre.substring(0, 8));
-
       const maxVal = Math.max(...values) * 1.15 || 10;
       const minVal = 0;
 
@@ -2635,7 +2337,6 @@ document.addEventListener('DOMContentLoaded', () => {
       const chartWidth = width - paddingLeft - paddingRight;
       const chartHeight = height - paddingTop - paddingBottom;
 
-      // Draw grid
       const gridLines = 4;
       ctx.strokeStyle = 'rgba(0, 0, 0, 0.05)';
       ctx.lineWidth = 1;
@@ -2652,7 +2353,6 @@ document.addEventListener('DOMContentLoaded', () => {
         ctx.moveTo(paddingLeft, y);
         ctx.lineTo(width - paddingRight, y);
         ctx.stroke();
-
         ctx.fillText('Bs. ' + Math.round(val), paddingLeft - 8, y);
       }
 
@@ -2665,14 +2365,12 @@ document.addEventListener('DOMContentLoaded', () => {
         points.push({ x, y });
       }
 
-      // Draw area gradient
       if (count > 0) {
         ctx.beginPath();
         ctx.moveTo(points[0].x, paddingTop + chartHeight);
         points.forEach(p => ctx.lineTo(p.x, p.y));
         ctx.lineTo(points[points.length - 1].x, paddingTop + chartHeight);
         ctx.closePath();
-
         const grad = ctx.createLinearGradient(0, paddingTop, 0, paddingTop + chartHeight);
         grad.addColorStop(0, 'rgba(26, 110, 245, 0.15)');
         grad.addColorStop(1, 'rgba(26, 110, 245, 0.0)');
@@ -2680,7 +2378,6 @@ document.addEventListener('DOMContentLoaded', () => {
         ctx.fill();
       }
 
-      // Draw line
       ctx.beginPath();
       ctx.strokeStyle = '#1a6ef5';
       ctx.lineWidth = 2;
@@ -2690,7 +2387,6 @@ document.addEventListener('DOMContentLoaded', () => {
       });
       ctx.stroke();
 
-      // Draw dots and labels
       ctx.fillStyle = '#1a6ef5';
       ctx.strokeStyle = '#ffffff';
       ctx.lineWidth = 1.5;
@@ -2698,7 +2394,6 @@ document.addEventListener('DOMContentLoaded', () => {
       ctx.textBaseline = 'top';
 
       const step = Math.max(1, Math.ceil(count / 6));
-
       points.forEach((p, i) => {
         ctx.beginPath();
         ctx.arc(p.x, p.y, 4, 0, Math.PI * 2);
@@ -2734,7 +2429,6 @@ document.addEventListener('DOMContentLoaded', () => {
       }
 
       let listToShow = [...historial].reverse();
-
       if (filtroActual === 'ultimo') {
         const seen = new Set();
         listToShow = listToShow.filter(h => {
@@ -2762,7 +2456,6 @@ document.addEventListener('DOMContentLoaded', () => {
       });
     }
 
-    // SheetJS Formula Excel Export
     function exportarExcel() {
       let historial = [];
       const rawHistorial = localStorage.getItem('costifyHistorialCostos');
@@ -2780,7 +2473,6 @@ document.addEventListener('DOMContentLoaded', () => {
       }
 
       const wb = XLSX.utils.book_new();
-
       const headers = [
         "Fecha", "Producto", "Unidades", "Materia Prima (Bs)", "Transporte (Bs)",
         "Mano de Obra (Bs)", "Embalaje (Bs)", "Electricidad/Servicios (Bs)",
@@ -2788,7 +2480,6 @@ document.addEventListener('DOMContentLoaded', () => {
         "Margen (%)", "Ganancia (Bs)", "Costo Total Lote (Bs)", "Costo por Unidad (Bs)",
         "Precio Venta Lote (Bs)", "Precio Venta Unidad (Bs)"
       ];
-
       const ws_historial_data = [headers];
 
       historial.forEach((h, index) => {
@@ -2815,7 +2506,6 @@ document.addEventListener('DOMContentLoaded', () => {
         ];
         ws_historial_data.push(row);
       });
-
       const ws_historial = XLSX.utils.aoa_to_sheet(ws_historial_data);
       XLSX.utils.book_append_sheet(wb, ws_historial, "Historial");
 
@@ -2838,7 +2528,6 @@ document.addEventListener('DOMContentLoaded', () => {
         ["Transporte Total Promedio", { t: 'n', f: `AVERAGE(Historial!E2:E${maxRow})` }],
         ["Otros Costos Promedio (Embalaje+Servicios+Admin)", { t: 'n', f: `AVERAGE(Historial!G2:G${maxRow})+AVERAGE(Historial!H2:H${maxRow})+AVERAGE(Historial!I2:I${maxRow})` }]
       ];
-
       const ws_resumen = XLSX.utils.aoa_to_sheet(ws_resumen_data);
       XLSX.utils.book_append_sheet(wb, ws_resumen, "Resumen");
 
@@ -2853,14 +2542,10 @@ document.addEventListener('DOMContentLoaded', () => {
         showToast("Historial borrado con éxito.", "success");
       }
     }
-
-    // FIN NUEVO: FUNCIONES EXCEL Y PERFIL
   </script>
 
-  <!-- SIDEBAR OVERLAY -->
   <div class="sidebar-overlay" id="sidebar-overlay" onclick="toggleSidebar()"></div>
 
-  <!-- SIDEBAR -->
   <div class="sidebar" id="sidebar">
     <div class="sidebar-header">
       <div class="sidebar-logo" style="display: flex; align-items: center; gap: 8px;">
@@ -2886,16 +2571,12 @@ document.addEventListener('DOMContentLoaded', () => {
       <button class="sidebar-close" onclick="toggleSidebar()"><i class="ti ti-x"></i></button>
     </div>
     <div class="sidebar-menu">
-      <!-- INICIO NUEVO: HISTORIAL DE COSTOS -->
       <button class="sidebar-item" onclick="goHistorial(); toggleSidebar()">
         <i class="ti ti-history"></i> Historial de costos
       </button>
-      <!-- FIN NUEVO: HISTORIAL DE COSTOS -->
-      <!-- INICIO NUEVO: PERFIL -->
       <button class="sidebar-item" onclick="goPerfil(); toggleSidebar()">
         <i class="ti ti-user-circle"></i> Mi perfil
       </button>
-      <!-- FIN NUEVO: PERFIL -->
       <div class="sidebar-section" style="margin-top:8px;">Comunidad</div>
       <button class="sidebar-item" onclick="goSoporte(); toggleSidebar()">
         <i class="ti ti-robot"></i> Soporte con IA
@@ -2906,8 +2587,6 @@ document.addEventListener('DOMContentLoaded', () => {
     </div>
   </div>
 
-
-  <!-- SOPORTE PAGE -->
   <div id="nav-soporte">
     <div class="soporte-wrap">
       <div class="chat-card">
@@ -2921,9 +2600,7 @@ document.addEventListener('DOMContentLoaded', () => {
         </div>
         <div class="chat-messages" id="chat-messages">
           <div class="msg bot">
-            <div class="msg-bubble">¡Hola! Soy CostifAI 👋 Puedo ayudarte con dudas sobre la
-              calculadora, cómo fijar precios, IVA, márgenes de ganancia o cualquier consejo financiero para tu
-              emprendimiento. ¿En qué te puedo ayudar hoy?</div>
+            <div class="msg-bubble">¡Hola! Soy CostifAI 👋 Puedo ayudarte con dudas sobre la calculadora, cómo fijar precios, IVA, márgenes de ganancia o cualquier consejo financiero para tu emprendimiento. ¿En qué te puedo ayudar hoy?</div>
             <div class="msg-time">Ahora</div>
           </div>
           <div class="typing" id="typing">
@@ -2935,14 +2612,10 @@ document.addEventListener('DOMContentLoaded', () => {
           </div>
         </div>
         <div class="chat-suggestions">
-          <button class="suggestion" onclick="sendSuggestion('¿Cómo calculo mi margen de ganancia?')">¿Cómo calculo mi
-            margen?</button>
-          <button class="suggestion" onclick="sendSuggestion('¿Qué es el IVA y cómo afecta mi precio?')">¿Qué es el
-            IVA?</button>
-          <button class="suggestion" onclick="sendSuggestion('¿Cómo uso la calculadora de Costify?')">¿Cómo uso la
-            calculadora?</button>
-          <button class="suggestion" onclick="sendSuggestion('Tips para fijar precios competitivos en Bolivia')">Tips de
-            precios en Bolivia</button>
+          <button class="suggestion" onclick="sendSuggestion('¿Cómo calculo mi margen de ganancia?')">¿Cómo calculo mi margen?</button>
+          <button class="suggestion" onclick="sendSuggestion('¿Qué es el IVA y cómo afecta mi precio?')">¿Qué es el IVA?</button>
+          <button class="suggestion" onclick="sendSuggestion('¿Cómo uso la calculadora de Costify?')">¿Cómo uso la calculadora?</button>
+          <button class="suggestion" onclick="sendSuggestion('Tips para fijar precios competitivos en Bolivia')">Tips de precios en Bolivia</button>
         </div>
         <div class="chat-input-wrap">
           <input type="text" class="chat-input" id="chat-input" placeholder="Escribe tu pregunta..."
@@ -2953,7 +2626,6 @@ document.addEventListener('DOMContentLoaded', () => {
     </div>
   </div>
 
-  <!-- FORO PAGE -->
   <div id="nav-foro">
     <div class="foro-wrap">
       <div class="foro-header">
@@ -2979,12 +2651,9 @@ document.addEventListener('DOMContentLoaded', () => {
     </div>
   </div>
 
-
-  <!-- INICIO NUEVO: HISTORIAL DE COSTOS -->
   <div id="nav-historial" style="display: none;">
     <div class="content" style="padding-top:2rem;">
 
-      <!-- Tarjetas de Resumen -->
       <div class="result-grid" style="margin-bottom: 1rem;">
         <div class="metric">
           <div class="metric-label">Cálculos guardados</div>
@@ -2998,30 +2667,24 @@ document.addEventListener('DOMContentLoaded', () => {
           <div class="metric-label">Precio sugerido prom.</div>
           <div class="metric-val highlight" id="hist-prom-precio">Bs. 0.00</div>
         </div>
-        <div class="metric"
-          style="display: flex; flex-direction: column; justify-content: center; align-items: center;">
+        <div class="metric" style="display: flex; flex-direction: column; justify-content: center; align-items: center;">
           <div class="metric-label">Costo Máx / Mín</div>
-          <div class="metric-val" id="hist-max-min"
-            style="font-size: 11px; font-weight: 500; line-height: 1.3; margin-top: 4px;">- / -</div>
+          <div class="metric-val" id="hist-max-min" style="font-size: 11px; font-weight: 500; line-height: 1.3; margin-top: 4px;">- / -</div>
         </div>
       </div>
 
-      <!-- Comparación de Variación de Costos -->
       <div class="card" id="hist-analisis-card" style="display: none;">
         <div class="card-header">
-          <div class="card-icon" style="background: var(--brand-light); color: var(--brand);"><i
-              class="ti ti-trending-up"></i></div>
+          <div class="card-icon" style="background: var(--brand-light); color: var(--brand);"><i class="ti ti-trending-up"></i></div>
           <div>
             <div class="card-title">Análisis de variación de costo</div>
             <div class="card-sub">Comparación con el cálculo anterior del mismo producto</div>
           </div>
         </div>
         <div id="analisis-content">
-          <!-- Dinámico -->
-        </div>
+          </div>
       </div>
 
-      <!-- Gráfico Histórico -->
       <div class="card">
         <div class="card-header">
           <div class="card-icon"><i class="ti ti-chart-line"></i></div>
@@ -3035,22 +2698,17 @@ document.addEventListener('DOMContentLoaded', () => {
         </div>
       </div>
 
-      <!-- Tabla y Acciones -->
       <div class="card">
-        <div
-          style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; flex-wrap: wrap; gap: 10px;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; flex-wrap: wrap; gap: 10px;">
           <div class="tabs" style="margin: 0;">
             <button class="tab active" id="btn-filtro-todos" onclick="filtrarHistorial('todos')">Ver todos</button>
             <button class="tab" id="btn-filtro-ultimo" onclick="filtrarHistorial('ultimo')">Ver último producto</button>
           </div>
           <div style="display: flex; gap: 8px;">
-            <!-- INICIO NUEVO: HISTORIAL Y EXPORTACIÓN EXCEL -->
             <button class="btn-secondary" onclick="exportarExcel()">
               <i class="ti ti-file-spreadsheet"></i> Exportar a Excel
             </button>
-            <!-- FIN NUEVO: HISTORIAL Y EXPORTACIÓN EXCEL -->
-            <button class="btn-secondary text-danger" onclick="borrarHistorial()"
-              style="border-color: rgba(220,38,38,0.2);">
+            <button class="btn-secondary text-danger" onclick="borrarHistorial()" style="border-color: rgba(220,38,38,0.2);">
               <i class="ti ti-trash"></i> Borrar historial
             </button>
           </div>
@@ -3072,15 +2730,81 @@ document.addEventListener('DOMContentLoaded', () => {
               </tr>
             </thead>
             <tbody id="historial-tbody">
-              <!-- Dinámico -->
-            </tbody>
+              </tbody>
           </table>
         </div>
       </div>
 
     </div>
   </div>
-  <!-- FIN NUEVO: HISTORIAL DE COSTOS -->
+
+  <div id="nav-perfil" style="display: none;">
+    <div class="content" style="padding-top:2rem;">
+      <div class="card">
+        <div class="card-header">
+          <div class="card-icon"><i class="ti ti-user-circle"></i></div>
+          <div>
+            <div class="card-title">Mi Perfil y Emprendimiento</div>
+            <div class="card-sub">Configura tu información personal y de negocio</div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="field">
+            <label>Tu nombre *</label>
+            <input type="text" id="perfil-nombre" placeholder="Ej. María López" />
+          </div>
+          <div class="field">
+            <label>Nombre de tu emprendimiento</label>
+            <input type="text" id="perfil-emprendimiento" placeholder="Ej. Repostería Delicias" />
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="field">
+            <label>Edad</label>
+            <input type="number" id="perfil-edad" placeholder="Ej. 28" min="1" max="120" />
+          </div>
+          <div class="field">
+            <label>Fecha de cumpleaños / Aniversario</label>
+            <input type="date" id="perfil-cumple" />
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="field" style="grid-column: span 2;">
+            <label>Rubro o Sector</label>
+            <input type="text" id="perfil-rubro" placeholder="Ej. Alimentos, Confección, Artesanías, Servicios..." />
+          </div>
+        </div>
+
+        <button class="btn-primary" onclick="guardarPerfil()" style="margin-top: 1rem;">
+          <i class="ti ti-device-floppy"></i> Guardar perfil
+        </button>
+
+        <div style="margin-top: 1.5rem; padding: 1rem 1.25rem; background: rgba(34, 197, 94, 0.08); border: 0.5px solid rgba(34, 197, 94, 0.3); border-radius: var(--radius); display: flex; align-items: center; gap: 12px;">
+          <i class="ti ti-shield-check" style="font-size: 24px; color: #15803d; flex-shrink: 0;"></i>
+          <div style="font-size: 12.5px; color: var(--text2); line-height: 1.5;">
+            <strong>Garantía de Privacidad:</strong> No vulneramos tu privacidad. Todos los datos de tu perfil y tus registros de costos se guardan <strong>exclusivamente en el almacenamiento local de tu propio navegador</strong> (localStorage). Ningún dato personal es enviado a servidores externos.
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-overlay" id="perfil-privacy-overlay">
+    <div class="login-card" style="max-width: 440px;">
+      <div class="login-header" style="margin-bottom: 1.5rem;">
+        <div style="font-size: 36px; color: #22c55e; margin-bottom: 8px;"><i class="ti ti-shield-check"></i></div>
+        <h3>Tu Privacidad está Protegida</h3>
+        <p style="margin-top: 8px; line-height: 1.5; color: var(--text-gray);">
+          En <strong>Costify</strong> no vulneramos tu privacidad. Todos los datos que ingreses en tu perfil y tus listas de costos se quedan almacenados <strong>única y exclusivamente en tu dispositivo</strong> (localStorage).
+        </p>
+      </div>
+      <button class="btn-brand-primary" onclick="cerrarModalPrivacidadPerfil()">Entendido y Aceptar</button>
+    </div>
+  </div>
 
 </body>
 
